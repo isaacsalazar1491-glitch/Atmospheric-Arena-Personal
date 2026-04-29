@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Atmospheric Arena - Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config={darkMode:"class",theme:{extend:{
+    colors:{
+      "primary":"#005bbf","secondary":"#0061a4","secondary-container":"#33a0fd",
+      "on-primary":"#ffffff","background":"#fbf9f9","surface":"#fbf9f9",
+      "surface-container-lowest":"#ffffff","surface-container-low":"#f5f3f3",
+      "surface-container":"#efeded","surface-container-high":"#e9e8e7",
+      "on-surface":"#1b1c1c","on-surface-variant":"#414754",
+      "on-secondary-fixed":"#001d36","secondary-fixed":"#d1e4ff",
+      "on-secondary-fixed-variant":"#00497d","tertiary-fixed":"#ffe16d",
+      "tertiary-fixed-dim":"#e9c400","on-tertiary-fixed":"#221b00",
+      "outline":"#727785","outline-variant":"#c1c6d6",
+      "surface-variant":"#e3e2e2","surface-bright":"#fbf9f9"
+    },
+    fontFamily:{"sans":["Inter","system-ui","sans-serif"]}
+  }}}
+</script>
+<style>
+  *{font-family:'Inter',system-ui,sans-serif}
+  .premium-gradient{background:linear-gradient(135deg,#005bbf 0%,#33a0fd 100%)}
+  .icon-svg{width:24px;height:24px;display:inline-block;vertical-align:middle;flex-shrink:0}
+</style>
+</head>
+<body class="bg-background text-on-background antialiased">
+
+<!-- Nav -->
+<header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl shadow-[0px_1px_0px_rgba(0,0,0,0.08)]">
+  <nav class="flex justify-between items-center w-full px-8 py-4 max-w-screen-2xl mx-auto">
+    <div class="text-2xl font-black italic tracking-tighter text-blue-700">Atmospheric Arena</div>
+    <div class="hidden md:flex items-center space-x-8">
+      <a class="text-blue-700 font-bold border-b-2 border-blue-700 pb-1" href="#">Home</a>
+      <a class="text-slate-600 hover:text-blue-600 transition-colors font-medium" href="#">Events</a>
+      <a class="text-slate-600 hover:text-blue-600 transition-colors font-medium" href="#">My Tickets</a>
+    </div>
+    <div class="flex items-center space-x-2">
+      <button class="p-2.5 text-slate-600 hover:bg-blue-50 rounded-full transition-all">
+        <!-- Bell icon -->
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+      </button>
+      <button class="p-2.5 text-slate-600 hover:bg-blue-50 rounded-full transition-all">
+        <!-- User icon -->
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main class="pt-24 pb-32">
+  <!-- Hero -->
+  <section class="px-6 max-w-screen-2xl mx-auto mb-16">
+    <div id="hero" class="relative overflow-hidden rounded-[2rem] h-[500px] flex items-center shadow-2xl group cursor-pointer">
+      <div class="absolute inset-0 bg-slate-800"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/50 to-transparent"></div>
+      <div class="relative z-10 px-12 max-w-3xl">
+        <span class="text-blue-300 font-bold tracking-[0.2em] uppercase text-sm mb-4 block">Evento Destacado</span>
+        <h1 class="text-white text-5xl md:text-6xl font-black tracking-tighter leading-tight mb-6">Upcoming Events</h1>
+        <p class="text-slate-300 text-lg mb-8">VIP · Preferencial · General — todas las categorías disponibles.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Eventos -->
+  <section class="px-6 max-w-screen-2xl mx-auto">
+    <div class="flex justify-between items-end mb-10">
+      <div>
+        <h2 class="text-3xl font-black tracking-tight text-on-surface">Curated Experiences</h2>
+        <p class="text-on-surface-variant mt-1">Todos los eventos incluyen zonas VIP, Preferencial y General.</p>
+      </div>
+    </div>
+    <div id="grid-principal" class="grid grid-cols-1 md:grid-cols-12 gap-8">
+      <div class="md:col-span-12 text-center py-16 text-on-surface-variant">Cargando eventos...</div>
+    </div>
+    <div id="grid-secundario" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-12"></div>
+  </section>
+
+  <!-- CTA VIP -->
+  <section class="px-6 max-w-screen-2xl mx-auto mt-24">
+    <div class="bg-slate-900 text-white rounded-[2rem] p-12 flex flex-col md:flex-row items-center gap-12 relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-64 h-64 bg-yellow-400/10 blur-[100px] rounded-full"></div>
+      <div class="md:w-2/3 relative z-10">
+        <h2 class="text-4xl md:text-5xl font-black mb-6 tracking-tight">The VIP Gold Experience</h2>
+        <p class="text-slate-400 text-lg leading-relaxed mb-8">Lounge exclusivo, catering premium y los mejores ángulos. Disponible en todos los eventos.</p>
+        <button id="btn-vip-cta" class="bg-yellow-400 text-yellow-900 px-10 py-4 rounded-full font-bold hover:bg-yellow-300 transition-all shadow-xl active:scale-95 uppercase tracking-widest text-sm cursor-pointer">
+          Ver Tickets VIP
+        </button>
+      </div>
+      <div class="md:w-1/3 flex justify-center">
+        <div class="w-48 h-48 border-2 border-yellow-400/30 rounded-full flex items-center justify-center">
+          <div class="w-36 h-36 border-4 border-yellow-400/60 rounded-full flex items-center justify-center">
+            <svg viewBox="0 0 24 24" fill="#ffe16d" class="w-16 h-16">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+const CATS_PILLS = `
+  <div class="flex gap-1.5 flex-wrap mt-3">
+    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-800 uppercase tracking-wider">VIP</span>
+    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800 uppercase tracking-wider">Preferencial</span>
+    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-green-100 text-green-800 uppercase tracking-wider">General</span>
+  </div>`;
+
+let eventos = [];
+
+function inicializar() {
+  if (!window.javaApp) { setTimeout(inicializar, 150); return; }
+  eventos = JSON.parse(window.javaApp.getEventos());
+  renderHome();
+}
+
+function renderHome() {
+  if (!eventos.length) return;
+  const [grande, sec1, sec2, ...resto] = eventos;
+
+  // Hero
+  document.getElementById('hero').innerHTML = `
+    <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+         src="${grande.imagenUrl}" alt="${grande.nombre}"/>
+    <div class="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/50 to-transparent"></div>
+    <div class="relative z-10 px-12 max-w-3xl">
+      <span class="text-blue-300 font-bold tracking-[0.2em] uppercase text-sm mb-4 block">Evento Destacado</span>
+      <h1 class="text-white text-5xl md:text-6xl font-black tracking-tighter leading-tight mb-3">${grande.nombre}</h1>
+      <p class="text-slate-300 flex items-center gap-3 mb-4 flex-wrap text-sm">
+        <span>${grande.fecha}</span>
+        <span class="text-slate-500">·</span>
+        <span>${grande.lugar}</span>
+      </p>
+      <div class="flex gap-2 mb-7">
+        <span class="px-3 py-1 rounded-full text-xs font-bold bg-purple-500/80 text-white uppercase tracking-wider">VIP</span>
+        <span class="px-3 py-1 rounded-full text-xs font-bold bg-blue-500/80 text-white uppercase tracking-wider">Preferencial</span>
+        <span class="px-3 py-1 rounded-full text-xs font-bold bg-green-500/80 text-white uppercase tracking-wider">General</span>
+      </div>
+      <button onclick="irAEvento('${grande.id}')" class="premium-gradient text-white px-8 py-4 rounded-full font-bold flex items-center gap-2 shadow-lg active:scale-95 transition-all cursor-pointer text-sm">
+        Ver Boletos
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>`;
+  document.getElementById('hero').onclick = () => irAEvento(grande.id);
+
+  // Grid principal
+  document.getElementById('grid-principal').innerHTML = `
+    <div class="md:col-span-8 bg-surface-container-lowest rounded-[1.5rem] overflow-hidden shadow-[0px_8px_32px_rgba(0,0,0,0.08)] flex flex-col md:flex-row group transition-all hover:shadow-xl">
+      <div class="md:w-1/2 relative overflow-hidden">
+        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 min-h-[250px]"
+             src="${grande.imagenUrl}" alt="${grande.nombre}"/>
+      </div>
+      <div class="md:w-1/2 p-8 flex flex-col justify-between">
+        <div>
+          <h3 class="text-2xl font-black text-on-surface mb-2 leading-tight">${grande.nombre}</h3>
+          ${CATS_PILLS}
+          <div class="space-y-2.5 mt-5 mb-8 text-sm">
+            <div class="flex items-center gap-3 text-on-surface-variant">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 flex-shrink-0 text-outline"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span class="font-medium">${grande.fecha}</span>
+            </div>
+            <div class="flex items-center gap-3 text-on-surface-variant">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 flex-shrink-0 text-outline"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="font-medium">${grande.lugar}</span>
+            </div>
+          </div>
+        </div>
+        <button onclick="irAEvento('${grande.id}')" class="premium-gradient text-white w-full py-4 rounded-full font-bold shadow-md hover:shadow-lg transition-all active:scale-95 cursor-pointer text-sm">
+          Ver Boletos
+        </button>
+      </div>
+    </div>
+    <div class="md:col-span-4 space-y-6">
+      ${[sec1, sec2].filter(Boolean).map(e => `
+        <div class="bg-surface-container-lowest p-5 rounded-[1.5rem] shadow-[0px_8px_32px_rgba(0,0,0,0.08)] hover:bg-surface-bright transition-colors cursor-pointer">
+          <div class="h-36 rounded-xl overflow-hidden mb-4">
+            <img class="w-full h-full object-cover hover:scale-105 transition-transform" src="${e.imagenUrl}" alt="${e.nombre}"/>
+          </div>
+          <h4 class="text-base font-black text-on-surface leading-tight mb-1">${e.nombre}</h4>
+          ${CATS_PILLS}
+          <p class="text-on-surface-variant text-xs mt-2 mb-4">${e.fecha} · ${e.lugar}</p>
+          <button onclick="irAEvento('${e.id}')" class="w-full py-3 bg-secondary-fixed text-on-secondary-fixed-variant rounded-xl font-bold hover:bg-blue-100 transition-colors cursor-pointer text-sm">
+            Ver Boletos
+          </button>
+        </div>`).join('')}
+    </div>`;
+
+  // Cards pequeñas
+  document.getElementById('grid-secundario').innerHTML = resto.map(e => `
+    <div class="bg-surface-container-lowest rounded-[1.5rem] overflow-hidden shadow-[0px_8px_32px_rgba(0,0,0,0.08)] flex flex-col group">
+      <div class="h-44 overflow-hidden relative">
+        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="${e.imagenUrl}" alt="${e.nombre}"/>
+      </div>
+      <div class="p-5 flex-grow flex flex-col">
+        <h4 class="text-base font-black mb-1 leading-tight">${e.nombre}</h4>
+        <div class="flex gap-1 mb-3">
+          <span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-purple-100 text-purple-800 uppercase">VIP</span>
+          <span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-blue-100 text-blue-800 uppercase">Pref</span>
+          <span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-green-100 text-green-800 uppercase">Gral</span>
+        </div>
+        <div class="text-xs text-on-surface-variant space-y-1 mb-5">
+          <p>${e.fecha}</p><p>${e.lugar}</p>
+        </div>
+        <button onclick="irAEvento('${e.id}')" class="mt-auto w-full py-2.5 text-primary font-bold border-2 border-primary/10 rounded-full hover:bg-primary hover:text-white transition-all cursor-pointer text-sm">
+          Ver Boletos
+        </button>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('btn-vip-cta').onclick = () => irAEvento(eventos[0].id);
+}
+
+function irAEvento(id) {
+  if (window.javaApp) window.javaApp.navegarASeleccion(id);
+}
+</script>
+</body>
+</html>
