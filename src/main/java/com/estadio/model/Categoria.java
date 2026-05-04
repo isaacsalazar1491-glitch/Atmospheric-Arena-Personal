@@ -10,13 +10,15 @@ package com.estadio.model;
  *   - Responsabilidades mezcladas → viola el principio de responsabilidad única.
  *   - Estado mutable en un enum → antipatrón en Java.
  */
-public enum Categoria {
+public enum Categoria 
+{
     VIP,
     PREFERENCIAL,
     GENERAL;
 
     @Override
-    public String toString() {
+    public String toString() 
+    {
         return name().charAt(0) + name().substring(1).toLowerCase();
     }
 }

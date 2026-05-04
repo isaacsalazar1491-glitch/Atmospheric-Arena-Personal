@@ -8,7 +8,8 @@ import java.util.List;
  * Contiene el detalle de una venta completada.
  * Se genera después de cada compra y se encola para persistencia.
  */
-public class ReporteVenta {
+public class ReporteVenta 
+{
 
     private static final DateTimeFormatter FORMATO = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
@@ -17,7 +18,8 @@ public class ReporteVenta {
     private final List<Boleto> boletosVendidos;
     private final double totalGenerado;
 
-    public ReporteVenta(Categoria categoria, List<Boleto> boletosVendidos) {
+    public ReporteVenta(Categoria categoria, List<Boleto> boletosVendidos) 
+    {
         this.fechaHora       = LocalDateTime.now();
         this.categoria       = categoria;
         this.boletosVendidos = boletosVendidos;
@@ -27,17 +29,31 @@ public class ReporteVenta {
     }
 
     // ── Getters ─────────────────────────────────────────────
-    public LocalDateTime getFechaHora()         { return fechaHora; }
-    public Categoria getCategoria()             { return categoria; }
-    public List<Boleto> getBoletosVendidos()    { return boletosVendidos; }
-    public double getTotalGenerado()            { return totalGenerado; }
-    public int getCantidadBoletos()             { return boletosVendidos.size(); }
+    public LocalDateTime getFechaHora()         
+    { 
+        return fechaHora; 
+    }
+    public Categoria getCategoria()             
+    { 
+        return categoria; 
+    }
+    public List<Boleto> getBoletosVendidos()    
+    { return boletosVendidos; }
+    public double getTotalGenerado()            
+    { 
+        return totalGenerado; 
+    }
+    public int getCantidadBoletos()             
+    {
+        return boletosVendidos.size(); 
+    }
 
     /**
      * Genera el contenido del reporte listo para ser escrito en .txt
      */
     @Override
-    public String toString() {
+    public String toString() 
+    {
         StringBuilder sb = new StringBuilder();
         String separador = "=".repeat(50);
 
@@ -50,7 +66,8 @@ public class ReporteVenta {
         sb.append("Total generado  : $").append(String.format("%.2f", totalGenerado)).append("\n");
         sb.append("\nDetalle de asientos vendidos:\n");
 
-        for (Boleto b : boletosVendidos) {
+        for (Boleto b : boletosVendidos) 
+        {
             sb.append("  - ID: ").append(b.getId())
               .append(" | Asiento: ").append(b.getNumeroAsiento())
               .append(" | Precio: $").append(String.format("%.2f", b.getPrecio())).append("\n");

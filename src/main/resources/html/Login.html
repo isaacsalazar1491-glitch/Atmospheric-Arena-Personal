@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Atmospheric Arena — Iniciar Sesión</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #0f172a; 
+            color: white; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+        }
+        .login-card { 
+            background: #1e293b; 
+            padding: 2.5rem; 
+            border-radius: 1rem; 
+            width: 350px; 
+            text-align: center; 
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3); 
+            border: 1px solid #334155;
+        }
+        h2 { margin-bottom: 0.5rem; color: #3b82f6; }
+        p { color: #94a3b8; font-size: 0.9rem; margin-bottom: 2rem; }
+        input { 
+            width: 100%; 
+            padding: 12px; 
+            margin: 8px 0; 
+            border-radius: 0.5rem; 
+            border: 1px solid #334155; 
+            background: #0f172a; 
+            color: white; 
+            box-sizing: border-box; 
+            outline: none;
+        }
+        input:focus { border-color: #3b82f6; }
+        button { 
+            width: 100%; 
+            padding: 12px; 
+            background: #3b82f6; 
+            color: white; 
+            border: none; 
+            border-radius: 0.5rem; 
+            cursor: pointer; 
+            font-weight: bold; 
+            margin-top: 1.5rem;
+            transition: background 0.2s;
+        }
+        button:hover { background: #2563eb; }
+        #mensaje { 
+            color: #f87171; 
+            font-size: 0.85rem; 
+            margin-top: 1rem; 
+            min-height: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h2>Atmospheric Arena</h2>
+        <p>Sistema de Gestión de Entradas</p>
+        
+        <input type="text" id="usuario" placeholder="Nombre de usuario" spellcheck="false">
+        <input type="password" id="password" placeholder="Contraseña">
+        
+        <button onclick="intentarLogin()">Entrar al Sistema</button>
+        
+        <div id="mensaje"></div>
+    </div>
+
+    <script>
+        function intentarLogin() {
+            const u = document.getElementById('usuario').value;
+            const p = document.getElementById('password').value;
+            
+            if (!u || !p) {
+                mostrarError('Por favor, llena todos los campos.');
+                return;
+            }
+
+            // Esta función llama al método iniciarSesion que creamos en JavaBridge.java
+            if (typeof javaApp !== 'undefined') {
+                javaApp.iniciarSesion(u, p);
+            } else {
+                console.error("El puente con Java no está listo.");
+            }
+        }
+
+        // Esta función es invocada por el JavaBridge si las credenciales fallan
+        function mostrarError(msg) {
+            document.getElementById('mensaje').innerText = msg;
+        }
+    </script>
+</body>
+</html>

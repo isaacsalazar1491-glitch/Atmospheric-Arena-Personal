@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Atmospheric Arena - Selección</title>
+<title>Atmospheric Arena - Selección Interactiva</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <script>
@@ -13,9 +13,6 @@
       "on-primary":"#ffffff","background":"#fbf9f9","surface":"#fbf9f9",
       "surface-container-lowest":"#ffffff","surface-container-low":"#f5f3f3",
       "surface-container":"#efeded","surface-container-high":"#e9e8e7",
-      "on-surface":"#1b1c1c","on-surface-variant":"#414754",
-      "on-secondary-fixed":"#001d36","secondary-fixed":"#d1e4ff",
-      "on-secondary-fixed-variant":"#00497d","outline":"#727785","outline-variant":"#c1c6d6",
     },
     fontFamily:{"sans":["Inter","system-ui","sans-serif"]}
   }}}
@@ -24,350 +21,265 @@
   *{font-family:'Inter',system-ui,sans-serif}
 
   /* Colores de zona */
-  .zona-vip         { background:#7c3aed; color:#fff; }
+  .zona-vip          { background:#7c3aed; color:#fff; }
   .zona-vip:hover:not(:disabled)    { background:#6d28d9; }
   .zona-preferencial { background:#2563eb; color:#fff; }
   .zona-preferencial:hover:not(:disabled) { background:#1d4ed8; }
   .zona-general      { background:#16a34a; color:#fff; }
   .zona-general:hover:not(:disabled) { background:#15803d; }
 
-  /* Asiento ocupado */
+  /* Asientos */
   .seat-ocupado { background:#fca5a5!important; color:#991b1b!important; opacity:0.5; cursor:not-allowed!important; }
-
-  /* Asiento seleccionado */
-  .seat-sel-vip         { background:#4c1d95!important; outline:3px solid #c4b5fd; }
+  .seat-sel-vip          { background:#4c1d95!important; outline:3px solid #c4b5fd; }
   .seat-sel-preferencial { background:#1e3a8a!important; outline:3px solid #93c5fd; }
   .seat-sel-general      { background:#14532d!important; outline:3px solid #86efac; }
-
   .seat-btn { transition:transform .1s; border-radius:8px; }
   .seat-btn:hover:not(:disabled) { transform:scale(1.2); }
   .seat-btn:active:not(:disabled){ transform:scale(0.9); }
 
-  /* Header de zona */
-  .zona-header-vip         { background:linear-gradient(90deg,#7c3aed22,transparent); border-left:3px solid #7c3aed; }
-  .zona-header-preferencial { background:linear-gradient(90deg,#2563eb22,transparent); border-left:3px solid #2563eb; }
-  .zona-header-general      { background:linear-gradient(90deg,#16a34a22,transparent); border-left:3px solid #16a34a; }
-
-  /* Tab activo por zona */
-  .tab-vip-active     { background:#7c3aed; color:#fff; box-shadow:0 4px 14px rgba(124,58,237,.3); }
-  .tab-pref-active    { background:#2563eb; color:#fff; box-shadow:0 4px 14px rgba(37,99,235,.3); }
-  .tab-gral-active    { background:#16a34a; color:#fff; box-shadow:0 4px 14px rgba(22,163,74,.3); }
-  .tab-inactive       { background:#f5f3f3; color:#414754; }
-  .tab-inactive:hover { background:#e9e8e7; }
+  /* Efecto de mapa interactivo */
+  .map-zone { transition: all 0.2s ease; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; letter-spacing: 0.1em; }
+  .map-zone:hover { filter: brightness(1.1); transform: scale(1.02); z-index: 10; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3); }
+  .map-zone.active { filter: brightness(1.2); box-shadow: 0 0 0 4px white, 0 0 0 8px currentColor; z-index: 20; transform: scale(1.05); }
 </style>
 </head>
 <body class="bg-background text-on-background min-h-screen pb-32 md:pb-0 md:pt-20">
 
-<!-- Nav -->
 <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl shadow-[0px_1px_0px_rgba(0,0,0,0.08)]">
   <div class="flex justify-between items-center w-full px-8 py-4 max-w-screen-2xl mx-auto">
     <div class="flex items-center gap-3">
-      <button onclick="irAHome()" class="p-2 text-slate-600 hover:bg-blue-50 rounded-full transition-all cursor-pointer" title="Regresar">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-          <path d="M19 12H5M12 19l-7-7 7-7"/>
-        </svg>
+      <button onclick="irAHome()" class="p-2 text-slate-600 hover:bg-blue-50 rounded-full transition-all cursor-pointer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
       </button>
       <div class="text-2xl font-black italic tracking-tighter text-blue-700">Atmospheric Arena</div>
-    </div>
-    <div class="hidden md:flex gap-8 items-center">
-      <a onclick="irAHome()" class="text-slate-600 hover:text-blue-600 cursor-pointer font-medium">Home</a>
-      <a class="text-blue-700 font-bold border-b-2 border-blue-700 pb-1">Events</a>
-      <a class="text-slate-600 hover:text-blue-600 font-medium" href="#">My Tickets</a>
-    </div>
-    <div class="flex gap-2 items-center">
-      <button class="p-2.5 text-slate-600 hover:bg-blue-50 rounded-full">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-        </svg>
-      </button>
-      <button class="p-2.5 text-slate-600 hover:bg-blue-50 rounded-full">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-        </svg>
-      </button>
     </div>
   </div>
 </nav>
 
 <main class="max-w-screen-2xl mx-auto px-6 py-8 flex flex-col lg:flex-row gap-8">
 
-  <!-- Columna izquierda -->
-  <div class="flex-grow space-y-6">
-
-    <!-- Header del evento -->
-    <div class="bg-surface-container-lowest rounded-2xl shadow-[0px_8px_32px_rgba(0,0,0,0.08)] overflow-hidden">
-      <div class="relative h-32 overflow-hidden">
-        <img id="evento-img" src="" alt="" class="w-full h-full object-cover"/>
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/70"></div>
-      </div>
-      <div class="p-6">
-        <h1 id="evento-nombre" class="text-2xl md:text-3xl font-black tracking-tight text-on-surface mb-1">Cargando...</h1>
-        <p class="text-on-surface-variant text-sm flex items-center gap-4 flex-wrap">
-          <span class="flex items-center gap-1.5">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4">
-              <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-            </svg>
-            <span id="evento-fecha">—</span>
-          </span>
-          <span class="flex items-center gap-1.5">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-            </svg>
-            <span id="evento-lugar">—</span>
-          </span>
-        </p>
-      </div>
-    </div>
-
-    <!-- Info de zonas (antes tabs) -->
-    <div class="grid grid-cols-3 gap-3">
-      <div class="bg-surface-container-lowest rounded-2xl p-4 border-l-4 border-purple-500">
-        <div class="flex items-center gap-2 mb-1">
-          <div class="w-3 h-3 rounded-full bg-purple-500"></div>
-          <span class="text-xs font-black uppercase tracking-wider text-purple-700">VIP</span>
+  <!-- COLUMNA IZQUIERDA: Contexto del Evento -->
+  <div class="lg:w-1/4 space-y-6">
+    <div class="bg-surface-container-lowest rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <div class="relative h-40 overflow-hidden">
+        <img id="evento-img" src="" class="w-full h-full object-cover"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent flex flex-col justify-end p-5">
+            <h1 id="evento-nombre" class="text-xl font-black text-white leading-tight mb-1">Cargando...</h1>
+            <p id="evento-fecha" class="text-slate-300 text-xs">—</p>
         </div>
-        <p class="text-xl font-black text-on-surface" id="precio-vip">$500</p>
-        <p class="text-xs text-on-surface-variant" id="disp-vip">— disponibles</p>
-        <p class="text-[10px] text-purple-600 font-semibold mt-1">Filas A – B</p>
-      </div>
-      <div class="bg-surface-container-lowest rounded-2xl p-4 border-l-4 border-blue-500">
-        <div class="flex items-center gap-2 mb-1">
-          <div class="w-3 h-3 rounded-full bg-blue-500"></div>
-          <span class="text-xs font-black uppercase tracking-wider text-blue-700">Preferencial</span>
-        </div>
-        <p class="text-xl font-black text-on-surface" id="precio-pref">$250</p>
-        <p class="text-xs text-on-surface-variant" id="disp-pref">— disponibles</p>
-        <p class="text-[10px] text-blue-600 font-semibold mt-1">Filas C – E</p>
-      </div>
-      <div class="bg-surface-container-lowest rounded-2xl p-4 border-l-4 border-green-500">
-        <div class="flex items-center gap-2 mb-1">
-          <div class="w-3 h-3 rounded-full bg-green-500"></div>
-          <span class="text-xs font-black uppercase tracking-wider text-green-700">General</span>
-        </div>
-        <p class="text-xl font-black text-on-surface" id="precio-gral">$100</p>
-        <p class="text-xs text-on-surface-variant" id="disp-gral">— disponibles</p>
-        <p class="text-[10px] text-green-600 font-semibold mt-1">Filas F – J</p>
-      </div>
-    </div>
-
-    <!-- Mapa de asientos -->
-    <div class="bg-surface-container-low rounded-[1.5rem] p-6 md:p-10 shadow-inner">
-      <!-- Stage -->
-      <div class="flex justify-center mb-10">
-        <div class="w-full max-w-2xl">
-          <div class="h-4 bg-gradient-to-r from-transparent via-slate-300 to-transparent rounded-full"></div>
-          <p class="text-center text-xs font-bold uppercase tracking-widest text-slate-400 mt-2">⬆ Stage / Screen ⬆</p>
-        </div>
-      </div>
-
-      <!-- Leyenda de estado -->
-      <div class="flex flex-wrap justify-center gap-6 mb-8">
-        <div class="flex items-center gap-2">
-          <div class="w-5 h-5 rounded-md bg-purple-600"></div>
-          <span class="text-xs font-bold uppercase tracking-wider">VIP disponible</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <div class="w-5 h-5 rounded-md bg-blue-600"></div>
-          <span class="text-xs font-bold uppercase tracking-wider">Preferencial</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <div class="w-5 h-5 rounded-md bg-green-600"></div>
-          <span class="text-xs font-bold uppercase tracking-wider">General</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <div class="w-5 h-5 rounded-md bg-red-300 opacity-60"></div>
-          <span class="text-xs font-bold uppercase tracking-wider">Ocupado</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <div class="w-5 h-5 rounded-md bg-slate-900 outline outline-2 outline-violet-300"></div>
-          <span class="text-xs font-bold uppercase tracking-wider">Seleccionado</span>
-        </div>
-      </div>
-
-      <!-- Grid de asientos -->
-      <div id="seat-grid" class="max-w-4xl mx-auto space-y-1">
-        <p class="text-center text-on-surface-variant py-8">Cargando asientos...</p>
       </div>
     </div>
   </div>
 
-  <!-- Columna derecha: resumen -->
-  <aside class="w-full lg:w-96">
-    <div class="bg-surface-container-lowest rounded-[1.5rem] p-8 shadow-[0px_8px_32px_rgba(0,0,0,0.08)] sticky top-28 flex flex-col">
-      <h3 class="text-2xl font-black tracking-tight text-on-surface mb-1">Order Summary</h3>
-      <p id="resumen-evento" class="text-sm text-on-surface-variant mb-6 truncate">—</p>
+  <!-- COLUMNA CENTRAL: Mapa Interactivo y Cuadrícula dinámica -->
+  <div class="flex-grow space-y-6">
+    <div class="bg-surface-container-lowest rounded-[1.5rem] p-6 lg:p-10 shadow-sm border border-slate-200">
+        
+        <h3 class="text-xl font-black text-center mb-2">Selecciona una Zona</h3>
+        <p class="text-xs text-center text-slate-500 mb-8">Haz clic en los bloques de color alrededor de la cancha</p>
 
-      <!-- Lista de boletos seleccionados -->
-      <div id="ticket-list" class="space-y-3 mb-6 min-h-[80px] max-h-56 overflow-y-auto">
-        <p class="text-on-surface-variant text-sm text-center py-4">Selecciona asientos del mapa</p>
-      </div>
+        <!-- MAPA DEL ESTADIO INTERACTIVO -->
+        <div class="relative w-full max-w-2xl mx-auto aspect-[4/3] bg-surface-container-low rounded-[2rem] p-4 border-2 border-slate-200 mb-10">
+            
+            <!-- Cancha Central (Decorativa) -->
+            <div class="absolute inset-y-16 inset-x-20 bg-green-600 rounded-lg border-2 border-white/50 flex items-center justify-center pointer-events-none">
+                <div class="w-20 h-20 border-2 border-white/50 rounded-full"></div>
+                <div class="absolute w-full h-0 border-t-2 border-white/50"></div>
+                <div class="absolute left-0 inset-y-1/4 w-12 border-2 border-l-0 border-white/50"></div>
+                <div class="absolute right-0 inset-y-1/4 w-12 border-2 border-r-0 border-white/50"></div>
+            </div>
 
-      <!-- Desglose por zona -->
-      <div id="desglose" class="hidden space-y-2 mb-4 bg-surface-container-low rounded-xl p-4">
-        <p class="text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-2">Desglose por zona</p>
-        <div id="desglose-vip"  class="hidden flex justify-between text-sm"><span class="text-purple-700 font-semibold">VIP</span><span id="desglose-vip-val" class="font-bold"></span></div>
-        <div id="desglose-pref" class="hidden flex justify-between text-sm"><span class="text-blue-700 font-semibold">Preferencial</span><span id="desglose-pref-val" class="font-bold"></span></div>
-        <div id="desglose-gral" class="hidden flex justify-between text-sm"><span class="text-green-700 font-semibold">General</span><span id="desglose-gral-val" class="font-bold"></span></div>
-      </div>
+            <!-- BOTONES DE ZONAS (Rectángulos alrededor de la imagen) -->
+            <!-- VIP (Arriba) -->
+            <div id="btn-zona-VIP" onclick="seleccionarZona('VIP')" class="map-zone absolute top-2 inset-x-20 h-12 bg-purple-500 rounded-t-xl border-b-4 border-purple-700 text-purple-500">VIP (Norte)</div>
+            
+            <!-- PREFERENCIAL (Abajo) -->
+            <div id="btn-zona-PREFERENCIAL" onclick="seleccionarZona('PREFERENCIAL')" class="map-zone absolute bottom-2 inset-x-20 h-12 bg-blue-500 rounded-b-xl border-t-4 border-blue-700 text-blue-500">PREFERENCIAL (Sur)</div>
+            
+            <!-- GENERAL OESTE (Izquierda) -->
+            <div id="btn-zona-GENERAL-OESTE" onclick="seleccionarZona('GENERAL')" class="map-zone absolute inset-y-16 left-2 w-16 bg-green-500 rounded-l-xl border-r-4 border-green-700 text-green-500" style="writing-mode: vertical-rl; transform: rotate(180deg);">GENERAL OESTE</div>
+            
+            <!-- GENERAL ESTE (Derecha) -->
+            <div id="btn-zona-GENERAL-ESTE" onclick="seleccionarZona('GENERAL')" class="map-zone absolute inset-y-16 right-2 w-16 bg-green-500 rounded-r-xl border-l-4 border-green-700 text-green-500" style="writing-mode: vertical-rl;">GENERAL ESTE</div>
 
-      <div class="border-t border-surface-container-high pt-5 mb-8">
-        <div class="flex justify-between items-center">
-          <p class="text-lg font-bold text-on-surface">Total</p>
-          <p id="total-price" class="text-3xl font-black text-primary">$0.00</p>
         </div>
-        <p id="selected-count" class="text-xs text-on-surface-variant mt-1 text-right">0 boletos seleccionados</p>
+
+        <!-- CONTENEDOR DE LA CUADRÍCULA DE ASIENTOS -->
+        <div id="grid-container" class="transition-all duration-500 ease-in-out opacity-0 translate-y-4 hidden">
+            <div class="border-t-2 border-dashed border-slate-200 pt-8">
+                <div class="flex justify-between items-end mb-6">
+                    <div>
+                        <h4 id="grid-title" class="text-lg font-black text-slate-800">Asientos Disponibles</h4>
+                        <p id="grid-subtitle" class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Selecciona tus butacas</p>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="flex items-center gap-1.5"><div class="w-4 h-4 rounded-md bg-slate-200"></div><span class="text-[10px] font-bold uppercase text-slate-500">Disponible</span></div>
+                        <div class="flex items-center gap-1.5"><div class="w-4 h-4 rounded-md bg-red-300"></div><span class="text-[10px] font-bold uppercase text-slate-500">Ocupado</span></div>
+                    </div>
+                </div>
+
+                <!-- Aquí se dibujan solo los asientos de la zona seleccionada -->
+                <div id="seat-grid" class="max-w-2xl mx-auto space-y-2"></div>
+            </div>
+        </div>
+
+    </div>
+  </div>
+
+  <!-- COLUMNA DERECHA: Resumen de Compra -->
+  <aside class="w-full lg:w-80">
+    <div class="bg-surface-container-lowest rounded-[1.5rem] p-6 shadow-sm border border-slate-200 sticky top-28 flex flex-col">
+      <h3 class="text-xl font-black tracking-tight mb-1">Order Summary</h3>
+      <p id="resumen-evento" class="text-xs text-slate-500 mb-4 truncate">—</p>
+
+      <div id="ticket-list" class="space-y-2 mb-4 min-h-[80px] max-h-48 overflow-y-auto">
+        <p class="text-slate-400 text-xs text-center py-4">Aún no hay boletos seleccionados</p>
+      </div>
+
+      <div class="border-t border-slate-200 pt-4 mb-6">
+        <div class="flex justify-between items-center">
+          <p class="text-sm font-bold">Total</p>
+          <p id="total-price" class="text-2xl font-black text-primary">$0.00</p>
+        </div>
+        <p id="selected-count" class="text-[10px] text-slate-500 mt-1 text-right">0 boletos</p>
       </div>
 
       <button id="btn-comprar" onclick="confirmarCompra()"
-              class="w-full bg-gradient-to-r from-primary to-secondary-container text-white font-black py-4 rounded-full text-base shadow-[0px_8px_24px_rgba(0,91,191,0.2)] hover:scale-[1.02] transition-transform active:scale-95 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100" disabled>
+              class="w-full bg-gradient-to-r from-primary to-secondary-container text-white font-black py-3 rounded-full text-sm shadow-[0px_8px_24px_rgba(0,91,191,0.2)] hover:scale-[1.02] transition-transform active:scale-95 disabled:opacity-40 disabled:scale-100" disabled>
         Confirmar Compra
-      </button>
-      <p class="text-[10px] text-center text-on-surface-variant mt-4 uppercase tracking-widest font-bold">Secure Checkout · Atmospheric Arena</p>
-      <button onclick="irAHome()" class="mt-4 w-full py-3 text-slate-500 font-bold border border-surface-container-high rounded-full hover:bg-surface-container-low transition-colors cursor-pointer text-sm">
-        ← Regresar a eventos
       </button>
     </div>
   </aside>
 </main>
 
-<!-- Modal éxito -->
+<!-- Modal éxito (Intacto) -->
 <div id="modal-exito" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
   <div class="bg-surface-container-lowest rounded-[2rem] p-10 max-w-md w-full mx-6 shadow-2xl text-center">
     <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10">
-        <polyline points="20 6 9 17 4 12"/>
-      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10"><polyline points="20 6 9 17 4 12"/></svg>
     </div>
-    <h2 class="text-3xl font-black text-on-surface mb-2">¡Compra exitosa!</h2>
-    <p class="text-on-surface-variant mb-6" id="modal-detalle">Tu compra fue procesada.</p>
+    <h2 class="text-3xl font-black mb-2">¡Compra exitosa!</h2>
+    <p class="text-slate-500 mb-6" id="modal-detalle"></p>
     <div class="bg-surface-container-low rounded-xl p-4 mb-8">
-      <p class="text-xs uppercase tracking-widest text-on-surface-variant mb-1">Total pagado</p>
+      <p class="text-xs uppercase tracking-widest text-slate-500 mb-1">Total pagado</p>
       <p id="modal-total" class="text-4xl font-black text-primary">$0.00</p>
-      <p class="text-xs text-on-surface-variant mt-2">Reporte guardado en carpeta /reportes</p>
     </div>
-    <div class="flex gap-4">
-      <button onclick="cerrarModal()" class="flex-1 py-3 border-2 border-primary text-primary font-bold rounded-full hover:bg-primary hover:text-white transition-all cursor-pointer">
-        Comprar más
-      </button>
-      <button onclick="irAHome()" class="flex-1 py-3 bg-primary text-white font-bold rounded-full hover:bg-blue-700 transition-all cursor-pointer">
-        Ir al inicio
-      </button>
-    </div>
+    <button onclick="cerrarModal()" class="w-full py-3 border-2 border-primary text-primary font-bold rounded-full hover:bg-primary hover:text-white transition-all cursor-pointer">Cerrar</button>
   </div>
 </div>
 
 <script>
   const LETRAS = ['A','B','C','D','E','F','G','H','I','J'];
-
-  // Zona por fila (coincide con JavaBridge.ZONA_POR_FILA)
   const ZONA_FILA = ['VIP','VIP','PREFERENCIAL','PREFERENCIAL','PREFERENCIAL',
                      'GENERAL','GENERAL','GENERAL','GENERAL','GENERAL'];
-
   const ZONA_CFG = {
-    'VIP':          { cls:'zona-vip',         selCls:'seat-sel-vip',         label:'VIP',         color:'#7c3aed', headerCls:'zona-header-vip'         },
-    'PREFERENCIAL': { cls:'zona-preferencial', selCls:'seat-sel-preferencial', label:'Preferencial', color:'#2563eb', headerCls:'zona-header-preferencial' },
-    'GENERAL':      { cls:'zona-general',      selCls:'seat-sel-general',      label:'General',      color:'#16a34a', headerCls:'zona-header-general'      },
+    'VIP':          { cls:'zona-vip',          selCls:'seat-sel-vip',          label:'VIP',          color:'#7c3aed' },
+    'PREFERENCIAL': { cls:'zona-preferencial', selCls:'seat-sel-preferencial', label:'Preferencial', color:'#2563eb' },
+    'GENERAL':      { cls:'zona-general',      selCls:'seat-sel-general',      label:'General',      color:'#16a34a' },
   };
 
-  // estado
-  let matrices        = {};        // { VIP: [[]], PREFERENCIAL: [[]], GENERAL: [[]] }
-  let seleccionados   = [];        // [{fila, col, zona, precio}]
-  let precios         = {};        // { VIP: 500, PREFERENCIAL: 250, GENERAL: 100 }
-  let infoEvento      = {};
+  let matrices = {}; let seleccionados = []; let precios = {}; let infoEvento = {};
+  
+  // NUEVA VARIABLE DE ESTADO
+  let zonaActiva = null;
 
   function inicializar() {
     if (!window.javaApp) { setTimeout(inicializar, 150); return; }
+    try {
+        infoEvento = JSON.parse(window.javaApp.getInfoEvento());
+        matrices   = JSON.parse(window.javaApp.getAsientosEvento());
+        const cats = JSON.parse(window.javaApp.getInfoCategorias());
 
-    infoEvento = JSON.parse(window.javaApp.getInfoEvento());
-    matrices   = JSON.parse(window.javaApp.getAsientosEvento());
-    const cats = JSON.parse(window.javaApp.getInfoCategorias());
+        document.getElementById('evento-img').src = infoEvento.imagenUrl || '';
+        document.getElementById('evento-nombre').textContent = infoEvento.nombre;
+        document.getElementById('evento-fecha').textContent  = infoEvento.fecha;
+        document.getElementById('resumen-evento').textContent = infoEvento.nombre;
 
-    // Cabecera
-    document.getElementById('evento-img').src    = infoEvento.imagenUrl || '';
-    document.getElementById('evento-nombre').textContent = infoEvento.nombre;
-    document.getElementById('evento-fecha').textContent  = infoEvento.fecha;
-    document.getElementById('evento-lugar').textContent  = infoEvento.lugar;
-    document.getElementById('resumen-evento').textContent = infoEvento.nombre + ' — ' + infoEvento.fecha;
-    document.title = infoEvento.nombre + ' | Atmospheric Arena';
+        cats.forEach(cat => { precios[cat.id] = cat.precio; });
 
-    // Llenar info de zonas y precios
-    cats.forEach(cat => {
-      precios[cat.id] = cat.precio;
-      if (cat.id === 'VIP') {
-        document.getElementById('precio-vip').textContent = '$' + cat.precio.toFixed(0);
-        document.getElementById('disp-vip').textContent   = cat.disponibles + ' disponibles';
-      } else if (cat.id === 'PREFERENCIAL') {
-        document.getElementById('precio-pref').textContent = '$' + cat.precio.toFixed(0);
-        document.getElementById('disp-pref').textContent   = cat.disponibles + ' disponibles';
-      } else {
-        document.getElementById('precio-gral').textContent = '$' + cat.precio.toFixed(0);
-        document.getElementById('disp-gral').textContent   = cat.disponibles + ' disponibles';
-      }
-    });
-
-    renderGrid();
-    actualizarResumen();
+        // Ya no dibujamos la matriz de inmediato, esperamos a que seleccione una zona.
+        actualizarResumen();
+    } catch(e) { console.error("Error init:", e); }
   }
 
-  // ── Renderizado del mapa completo ──────────────────────────
+  // NUEVA FUNCIÓN: Filtra qué zona se dibuja
+  function seleccionarZona(zona) {
+    zonaActiva = zona;
+    
+    // Quitar clase 'active' de todos los botones del mapa
+    document.querySelectorAll('.map-zone').forEach(btn => btn.classList.remove('active'));
+    
+    // Agregar clase 'active' al botón o botones de la zona seleccionada
+    if(zona === 'GENERAL') {
+        document.getElementById('btn-zona-GENERAL-OESTE').classList.add('active');
+        document.getElementById('btn-zona-GENERAL-ESTE').classList.add('active');
+    } else {
+        document.getElementById('btn-zona-' + zona).classList.add('active');
+    }
+
+    // Mostrar el contenedor de la cuadrícula con animación
+    const gridContainer = document.getElementById('grid-container');
+    gridContainer.classList.remove('hidden', 'opacity-0', 'translate-y-4');
+    gridContainer.classList.add('opacity-100', 'translate-y-0');
+
+    // Actualizar títulos
+    document.getElementById('grid-title').textContent = ZONA_CFG[zona].label;
+    document.getElementById('grid-title').style.color = ZONA_CFG[zona].color;
+    document.getElementById('grid-subtitle').textContent = `$${precios[zona].toFixed(2)} por asiento`;
+
+    renderGrid();
+  }
+
   function renderGrid() {
     const container = document.getElementById('seat-grid');
     container.innerHTML = '';
 
-    let zonaActual = null;
-
+    // EL SECRETO ESTÁ AQUÍ: Solo iteramos si la fila pertenece a la zona activa
     for (let f = 0; f < 10; f++) {
       const zona = ZONA_FILA[f];
-      const cfg  = ZONA_CFG[zona];
+      
+      // Si la fila no es de la zona que el usuario clickeó, la saltamos.
+      // Así mantenemos el ID de fila global intacto para Java.
+      if (zona !== zonaActiva) continue; 
 
-      // Encabezado de zona cuando cambia
-      if (zona !== zonaActual) {
-        zonaActual = zona;
-        const hdr = document.createElement('div');
-        hdr.className = `flex items-center gap-3 px-3 py-2 rounded-lg mb-1 mt-3 first:mt-0 ${cfg.headerCls}`;
-        hdr.innerHTML = `
-          <div class="w-2.5 h-2.5 rounded-full" style="background:${cfg.color}"></div>
-          <span class="text-xs font-black uppercase tracking-widest" style="color:${cfg.color}">${cfg.label}</span>
-          <span class="text-xs text-slate-400 font-medium">$${precios[zona] ? precios[zona].toFixed(0) : '—'} por asiento</span>`;
-        container.appendChild(hdr);
-      }
-
-      // Fila de asientos
+      const cfg = ZONA_CFG[zona];
       const fila = document.createElement('div');
-      fila.className = 'grid items-center gap-1 md:gap-2 mb-1';
-      fila.style.gridTemplateColumns = '24px repeat(10, 1fr) 24px';
+      fila.className = 'grid items-center gap-1.5 md:gap-2 mb-2';
+      fila.style.gridTemplateColumns = '20px repeat(10, 1fr) 20px';
 
-      // Label izquierda
       const lL = document.createElement('div');
-      lL.className = 'text-center text-[11px] font-black text-slate-400';
+      lL.className = 'text-center text-[10px] font-black text-slate-400';
       lL.textContent = LETRAS[f];
       fila.appendChild(lL);
 
-      // Asientos
       for (let c = 0; c < 10; c++) {
         const ocupado = matrices[zona] && matrices[zona][f][c];
         const sel     = seleccionados.some(s => s.fila === f && s.col === c);
         const btn     = document.createElement('button');
-        btn.className = 'seat-btn aspect-square flex items-center justify-center text-[10px] font-bold';
+        
+        // Estilo neutral si no está seleccionado ni ocupado
+        btn.className = 'seat-btn aspect-square flex items-center justify-center text-[10px] font-bold bg-slate-100 text-slate-400 hover:bg-slate-200';
         btn.textContent = c + 1;
-        btn.title = LETRAS[f] + (c + 1) + ' · ' + cfg.label;
 
         if (ocupado) {
           btn.classList.add('seat-ocupado');
           btn.disabled = true;
         } else if (sel) {
-          btn.classList.add(cfg.selCls);
-          btn.onclick = () => toggleAsiento(f, c, zona);
+          btn.className = `seat-btn aspect-square flex items-center justify-center text-[10px] font-bold ${cfg.selCls} text-white`;
         } else {
-          btn.classList.add(cfg.cls);
+          // Al hacer hover, toma el color de la zona
+          btn.onmouseenter = () => { btn.style.backgroundColor = cfg.color; btn.style.color = 'white'; };
+          btn.onmouseleave = () => { btn.style.backgroundColor = ''; btn.style.color = ''; };
           btn.onclick = () => toggleAsiento(f, c, zona);
         }
+        
+        if (sel) btn.onclick = () => toggleAsiento(f, c, zona); // Permitir deseleccionar
+
         fila.appendChild(btn);
       }
 
-      // Label derecha
       const lR = document.createElement('div');
-      lR.className = 'text-center text-[11px] font-black text-slate-400';
+      lR.className = 'text-center text-[10px] font-black text-slate-400';
       lR.textContent = LETRAS[f];
       fila.appendChild(lR);
 
@@ -377,112 +289,55 @@
 
   function toggleAsiento(f, c, zona) {
     const idx = seleccionados.findIndex(s => s.fila === f && s.col === c);
-    if (idx >= 0) {
-      seleccionados.splice(idx, 1);
-    } else {
-      seleccionados.push({ fila: f, col: c, zona: zona, precio: precios[zona] || 0 });
-    }
-    renderGrid();
-    actualizarResumen();
+    if (idx >= 0) seleccionados.splice(idx, 1);
+    else seleccionados.push({ fila: f, col: c, zona: zona, precio: precios[zona] || 0 });
+    renderGrid(); actualizarResumen();
   }
 
-  // ── Resumen ───────────────────────────────────────────────
   function actualizarResumen() {
     const count = seleccionados.length;
     const total = seleccionados.reduce((s, x) => s + x.precio, 0);
 
     document.getElementById('total-price').textContent    = '$' + total.toFixed(2);
-    document.getElementById('selected-count').textContent = count + ' boleto' + (count !== 1 ? 's' : '') + ' seleccionado' + (count !== 1 ? 's' : '');
+    document.getElementById('selected-count').textContent = count + ' boleto(s)';
     document.getElementById('btn-comprar').disabled       = count === 0;
 
-    // Ticket list
     const lista = document.getElementById('ticket-list');
     if (!count) {
-      lista.innerHTML = '<p class="text-on-surface-variant text-sm text-center py-4">Selecciona asientos del mapa</p>';
-      document.getElementById('desglose').classList.add('hidden');
+      lista.innerHTML = '<p class="text-slate-400 text-xs text-center py-2">Aún no hay boletos seleccionados</p>';
       return;
     }
 
-    const cfg_zona = { VIP: ZONA_CFG.VIP, PREFERENCIAL: ZONA_CFG.PREFERENCIAL, GENERAL: ZONA_CFG.GENERAL };
-    lista.innerHTML = seleccionados.map(({fila, col, zona, precio}) => {
-      const cc = cfg_zona[zona];
-      return `<div class="flex justify-between items-center py-1">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style="background:${ZONA_CFG[zona].color}20">
-            <svg viewBox="0 0 24 24" fill="none" stroke="${ZONA_CFG[zona].color}" stroke-width="2" stroke-linecap="round" class="w-4 h-4">
-              <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2z"/>
-            </svg>
-          </div>
-          <div>
-            <p class="text-sm font-bold text-on-surface">${LETRAS[fila]}-${col+1}</p>
-            <p class="text-xs" style="color:${ZONA_CFG[zona].color}">${cc.label}</p>
-          </div>
+    lista.innerHTML = seleccionados.map(({fila, col, zona, precio}) => `
+      <div class="flex justify-between items-center py-1.5 border-b border-slate-100 last:border-0">
+        <div class="text-xs">
+            <span class="font-bold text-slate-800">${LETRAS[fila]}-${col+1}</span>
+            <span class="text-[10px] font-bold ml-1" style="color:${ZONA_CFG[zona].color}">${ZONA_CFG[zona].label}</span>
         </div>
-        <p class="font-bold text-on-surface text-sm">$${precio.toFixed(2)}</p>
-      </div>`;
-    }).join('');
-
-    // Desglose por zona
-    const desglose = { VIP: 0, PREFERENCIAL: 0, GENERAL: 0 };
-    seleccionados.forEach(s => { desglose[s.zona] += s.precio; });
-
-    document.getElementById('desglose').classList.remove('hidden');
-    ['VIP','PREFERENCIAL','GENERAL'].forEach(z => {
-      const row = document.getElementById('desglose-' + z.toLowerCase().replace('encial',''));
-      const rowId = z === 'VIP' ? 'desglose-vip' : z === 'PREFERENCIAL' ? 'desglose-pref' : 'desglose-gral';
-      const valId = rowId + '-val';
-      const rowEl = document.getElementById(rowId);
-      if (desglose[z] > 0) {
-        rowEl.classList.remove('hidden');
-        rowEl.classList.add('flex');
-        const cnt = seleccionados.filter(s => s.zona === z).length;
-        document.getElementById(valId).textContent = cnt + 'x · $' + desglose[z].toFixed(2);
-      } else {
-        rowEl.classList.add('hidden');
-        rowEl.classList.remove('flex');
-      }
-    });
+        <p class="font-black text-slate-800 text-sm">$${precio.toFixed(0)}</p>
+      </div>`).join('');
   }
 
-  // ── Compra ────────────────────────────────────────────────
   function confirmarCompra() {
     if (!seleccionados.length || !window.javaApp) return;
-    // Formato: "fila,col,ZONA;fila,col,ZONA;..."
     const str = seleccionados.map(s => `${s.fila},${s.col},${s.zona}`).join(';');
     window.javaApp.confirmarCompraMixta(str);
   }
 
   function mostrarExito(cantidad, total) {
-    // Resumir zonas compradas
-    const resumen = {};
-    seleccionados.forEach(s => { resumen[s.zona] = (resumen[s.zona] || 0) + 1; });
-    const partes = Object.entries(resumen).map(([z, n]) => n + ' ' + ZONA_CFG[z].label).join(', ');
-
-    document.getElementById('modal-detalle').textContent = partes + ' para "' + infoEvento.nombre + '"';
+    document.getElementById('modal-detalle').textContent = cantidad + ' boletos procesados correctamente.';
     document.getElementById('modal-total').textContent   = '$' + total.toFixed(2);
     document.getElementById('modal-exito').classList.remove('hidden');
-
-    // Limpiar y refrescar
     seleccionados = [];
-    matrices = JSON.parse(window.javaApp.getAsientosEvento());
-    const cats = JSON.parse(window.javaApp.getInfoCategorias());
-    cats.forEach(cat => {
-      const el = cat.id === 'VIP' ? 'disp-vip' : cat.id === 'PREFERENCIAL' ? 'disp-pref' : 'disp-gral';
-      document.getElementById(el).textContent = cat.disponibles + ' disponibles';
-    });
-    renderGrid();
-    actualizarResumen();
+    zonaActiva = null;
+    document.getElementById('grid-container').classList.add('hidden');
+    document.querySelectorAll('.map-zone').forEach(btn => btn.classList.remove('active'));
+    inicializar(); 
   }
 
   function mostrarError(msg) { alert('Error: ' + msg); }
-
-  function cerrarModal() {
-    document.getElementById('modal-exito').classList.add('hidden');
-  }
-
-  function irAHome() {
-    if (window.javaApp) window.javaApp.navegarAHome();
-  }
+  function cerrarModal() { document.getElementById('modal-exito').classList.add('hidden'); }
+  function irAHome() { if (window.javaApp) window.javaApp.navegarAHome(); }
 </script>
 </body>
 </html>

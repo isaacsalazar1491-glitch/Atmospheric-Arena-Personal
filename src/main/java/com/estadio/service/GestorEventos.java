@@ -7,15 +7,18 @@ import java.util.*;
 /**
  * Catálogo de eventos.
  */
-public class GestorEventos {
+public class GestorEventos 
+{
 
     private final Map<String, Evento> eventos = new LinkedHashMap<>();
 
-    public GestorEventos() {
+    public GestorEventos() 
+    {
         registrarEventosIniciales();
     }
 
-    private void registrarEventosIniciales() {
+    private void registrarEventosIniciales() 
+    {
         registrar(new Evento("EVT-001",
             "London Lions vs. Manchester Titans",
             "Sábado, Oct 24 · 15:00",
@@ -59,30 +62,37 @@ public class GestorEventos {
             "https://upload.wikimedia.org/wikipedia/commons/c/c1/Farm_in_For%C3%AAt_%28Trooz%29.jpg"));
     }
 
-    public void registrar(Evento evento) {
+    public void registrar(Evento evento) 
+    {
         if (eventos.containsKey(evento.getId()))
             throw new IllegalArgumentException("Ya existe un evento con ID: " + evento.getId());
         eventos.put(evento.getId(), evento);
     }
 
-    public Evento getEvento(String id) {
+    public Evento getEvento(String id) 
+    {
         Evento e = eventos.get(id);
         if (e == null) throw new IllegalArgumentException("Evento no encontrado: " + id);
         return e;
     }
 
-    public List<Evento> getTodos() {
+    public List<Evento> getTodos() 
+    {
         return Collections.unmodifiableList(new ArrayList<>(eventos.values()));
     }
 
-    public String getTodosComoJson() {
+    public String getTodosComoJson() 
+    {
         StringBuilder sb = new StringBuilder("[");
         boolean first = true;
-        for (Evento e : eventos.values()) {
+        for (Evento e : eventos.values()) 
+        {
             if (!first) sb.append(",");
             sb.append(e.toJson());
             first = false;
         }
         return sb.append("]").toString();
     }
+    
+    
 }

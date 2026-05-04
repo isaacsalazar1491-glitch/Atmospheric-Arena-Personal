@@ -7,14 +7,17 @@ import javafx.stage.Stage;
 /**
  * Punto de entrada. Lanza la app JavaFX con WebView.
  */
-public class Main extends Application {
+public class Main extends Application 
+{
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) 
+    {
         new VentanaWebView(primaryStage);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
         launch(args);
     }
 }

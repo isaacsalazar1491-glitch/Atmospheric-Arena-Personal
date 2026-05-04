@@ -5,7 +5,8 @@ package com.estadio.model;
  * Un evento NO está atado a una categoría — expone las tres (VIP, PREFERENCIAL, GENERAL).
  * La categoría la elige el usuario en la pantalla de selección.
  */
-public class Evento {
+public class Evento 
+{
 
     private final String id;
     private final String nombre;
@@ -13,10 +14,13 @@ public class Evento {
     private final String lugar;
     private final String imagenUrl;
 
-    public Evento(String id, String nombre, String fecha, String lugar, String imagenUrl) {
+    public Evento(String id, String nombre, String fecha, String lugar, String imagenUrl) 
+    {
         if (id == null || id.isBlank())
+            
             throw new IllegalArgumentException("El id del evento no puede ser vacío.");
         if (nombre == null || nombre.isBlank())
+            
             throw new IllegalArgumentException("El nombre del evento no puede ser vacío.");
 
         this.id        = id;
@@ -26,13 +30,31 @@ public class Evento {
         this.imagenUrl = imagenUrl;
     }
 
-    public String getId()        { return id; }
-    public String getNombre()    { return nombre; }
-    public String getFecha()     { return fecha; }
-    public String getLugar()     { return lugar; }
-    public String getImagenUrl() { return imagenUrl; }
+    public String getId()        
+    { 
+        return id; 
+    }
+    
+    
+    public String getNombre()    
+    {
+        return nombre; 
+    }
+    public String getFecha()     
+    { 
+        return fecha; 
+    }
+    public String getLugar()     
+    {
+        return lugar; 
+    }
+    public String getImagenUrl() 
+    {
+        return imagenUrl; 
+    }
 
-    public String toJson() {
+    public String toJson() 
+    {
         return String.format(
             "{\"id\":\"%s\",\"nombre\":\"%s\",\"fecha\":\"%s\",\"lugar\":\"%s\",\"imagenUrl\":\"%s\"}",
             id, esc(nombre), esc(fecha), esc(lugar), esc(imagenUrl));
