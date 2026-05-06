@@ -20,16 +20,16 @@ public class GestorEventos
     private void registrarEventosIniciales() 
     {
         registrar(new Evento("EVT-001",
-            "London Lions vs. Manchester Titans",
-            "Sábado, Oct 24 · 15:00",
-            "Atmospheric Arena, Londres",
-            "https://upload.wikimedia.org/wikipedia/commons/2/27/City_of_Manchester_Stadium_2023_cropped.jpg"));
+            "La prueba final: Toluca vs Chivas",
+            "Sábado, Mayo 27 · 19:00",
+            "Estadio Nemesio Diez, Toluca",
+            "https://th.bing.com/th/id/R.bf8ab8a28c949f6bd629663f7467faf8?rik=ZmLkAw8Qq2ZswQ&riu=http%3a%2f%2fstadiumdb.com%2fpictures%2fstadiums%2fmex%2festadio_nemesio_diez%2festadio_nemesio_diez22.jpg&ehk=7GDi%2f9cVovVgRM%2fVbLGeXApFjntmOMZIgVYwfqaunXo%3d&risl=&pid=ImgRaw&r=0"));
 
         registrar(new Evento("EVT-002",
-            "Midnight Echo Live",
-            "Domingo, Oct 25 · 20:00",
-            "East Wing Stage",
-            "https://lh3.googleusercontent.com/aida-public/AB6AXuCAEhwNnRJOn38tcu2ihvq8cTd5w3ddevAH1N_yRW2W3r4deGKn6AOFN2hZ-NSonHVrMlDjLh0ya4B7oS6mSujiE0DTUeLeRQ3gwa4IkR8cLnNnIYiUdlF8_-xBBcCM5eiloJgPFMVg0HEDBjwPffFYOA_zXAgH5gM2cAWc7QMMNctdWPmkLrVZ2s559cQ7pvp2xfG3B0TT4ttoh5wNIx50ZrxVKxkXg0LYRwOkzHb1lkzPZsoNvHA3ZOOCNBhvltl2GB67Zp0pw9Y"));
+            "BTS Arirang Tour",
+            "Jueves, Mayo 07 · 20:00",
+            "Estadio GNP, CDMX",
+            "https://pbs.twimg.com/media/HEPOiRvb0AAhjnr?format=jpg&name=medium"));
 
         registrar(new Evento("EVT-003",
             "Global E-Sports Finals",

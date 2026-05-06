@@ -3,68 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <title>Atmospheric Arena — Iniciar Sesión</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
     <style>
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: #0f172a; 
-            color: white; 
+        body 
+        { 
+            font-family: 'Inter', sans-serif; 
+            background: #fbf9f9; 
+            color: #1e293b; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
             height: 100vh; 
             margin: 0; 
         }
-        .login-card { 
-            background: #1e293b; 
-            padding: 2.5rem; 
-            border-radius: 1rem; 
-            width: 350px; 
+        
+        .login-card
+        { 
+            background: #ffffff; 
+            padding: 3rem 2.5rem; 
+            border-radius: 2.5rem; 
+            width: 380px; 
             text-align: center; 
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3); 
-            border: 1px solid #334155;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.04); 
+            border: 1px solid #f1f5f9;
+            position: relative;
         }
-        h2 { margin-bottom: 0.5rem; color: #3b82f6; }
-        p { color: #94a3b8; font-size: 0.9rem; margin-bottom: 2rem; }
-        input { 
+        
+        h2 
+        { 
+            margin-bottom: 0.2rem; 
+            color: #005bbf; 
+            font-weight: 800; 
+            font-style: italic; 
+            letter-spacing: -0.03em; 
+            font-size: 1.5rem; 
+        }
+        
+        .subtitle 
+        { 
+            color: #94a3b8; 
+            font-size: 10px; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 0.15em; 
+            margin-bottom: 2.5rem; 
+        }
+        
+        .input-group 
+        { 
+            text-align: left; margin-bottom: 1.2rem;
+        }
+        
+        label
+        { 
+            display: block; 
+            font-size: 9px; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em; 
+            color: #94a3b8; 
+            margin-left: 1.2rem; 
+            margin-bottom: 0.5rem;
+        }
+        
+        input
+        { 
             width: 100%; 
-            padding: 12px; 
-            margin: 8px 0; 
-            border-radius: 0.5rem; 
-            border: 1px solid #334155; 
-            background: #0f172a; 
-            color: white; 
+            padding: 1rem 1.5rem; 
+            border-radius: 9999px; 
+            border: 1px solid #f1f5f9; 
+            background: #f8fafc; 
+            color: #1e293b; 
             box-sizing: border-box; 
-            outline: none;
-        }
-        input:focus { border-color: #3b82f6; }
-        button { 
-            width: 100%; 
-            padding: 12px; 
-            background: #3b82f6; 
-            color: white; 
-            border: none; 
-            border-radius: 0.5rem; 
-            cursor: pointer; 
-            font-weight: bold; 
-            margin-top: 1.5rem;
+            outline: none; 
+            font-size: 0.85rem;
+            font-family: 'Inter', sans-serif;
             transition: background 0.2s;
         }
-        button:hover { background: #2563eb; }
-        #mensaje { 
-            color: #f87171; 
-            font-size: 0.85rem; 
-            margin-top: 1rem; 
+        
+        input:focus 
+        { 
+            border-color: #f1f5f9; 
+            background: #f1f5f9; 
+            box-shadow: none; 
+        }
+        
+        button 
+        { 
+            width: 100%; 
+            padding: 1rem; 
+            background: #005bbf; 
+            color: white; 
+            border: none; 
+            border-radius: 9999px; 
+            cursor: pointer; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 0.1em; 
+            font-size: 0.75rem;
+            font-family: 'Inter', sans-serif;
+            margin-top: 1rem;
+            transition: all 0.2s;
+            box-shadow: 0 10px 20px rgba(0,91,191,0.12);
+        }
+        
+        button:hover 
+        { 
+            background: #004a9c; 
+            transform: translateY(-1px); 
+        }
+
+        .btn-back 
+        {
+            position: absolute;
+            top: -4.5rem;
+            left: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            text-decoration: none;
+            color: #94a3b8;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .btn-back:hover
+        { 
+            color: #005bbf; 
+        }
+        
+        .btn-back svg 
+        {
+            width: 32px;
+            height: 32px;
+            background: white;
+            border-radius: 50%;
+            padding: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        #mensaje 
+        { 
+            color: #ef4444; 
+            font-size: 0.75rem; 
+            font-weight: 600;
+            margin-top: 1.5rem; 
             min-height: 1.2rem;
         }
     </style>
 </head>
 <body>
+
     <div class="login-card">
+        <a onclick="irAHome()" class="btn-back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Volver al Inicio
+        </a>
+
         <h2>Atmospheric Arena</h2>
-        <p>Sistema de Gestión de Entradas</p>
+        <div class="subtitle">Panel de Administración</div>
         
-        <input type="text" id="usuario" placeholder="Nombre de usuario" spellcheck="false">
-        <input type="password" id="password" placeholder="Contraseña">
+        <div class="input-group">
+            <label>Usuario</label>
+            <input type="text" id="usuario" placeholder="Admin username" spellcheck="false">
+        </div>
+
+        <div class="input-group">
+            <label>Contraseña</label>
+            <input type="password" id="password" placeholder="••••••••">
+        </div>
         
         <button onclick="intentarLogin()">Entrar al Sistema</button>
         
@@ -72,26 +185,40 @@
     </div>
 
     <script>
-        function intentarLogin() {
+        function intentarLogin() 
+        {
             const u = document.getElementById('usuario').value;
             const p = document.getElementById('password').value;
             
-            if (!u || !p) {
+            if (!u || !p) 
+            {
                 mostrarError('Por favor, llena todos los campos.');
                 return;
             }
 
-            // Esta función llama al método iniciarSesion que creamos en JavaBridge.java
-            if (typeof javaApp !== 'undefined') {
+            if (typeof javaApp !== 'undefined') 
+            {
                 javaApp.iniciarSesion(u, p);
-            } else {
+            } else 
+            {
                 console.error("El puente con Java no está listo.");
             }
         }
 
-        // Esta función es invocada por el JavaBridge si las credenciales fallan
-        function mostrarError(msg) {
+        function mostrarError(msg)
+        {
             document.getElementById('mensaje').innerText = msg;
+        }
+
+        function irAHome() 
+        {
+            if (typeof javaApp !== 'undefined') 
+            {
+                javaApp.navegarAHome();
+            } else 
+            {
+                window.location.href = 'index.html';
+            }
         }
     </script>
 </body>

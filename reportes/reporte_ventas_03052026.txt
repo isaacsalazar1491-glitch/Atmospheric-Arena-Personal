@@ -50,3 +50,108 @@ Detalle de asientos vendidos:
   - ID: 8DB3C6EE | Asiento: F1-C4 | Precio: $1.00
 ==================================================
 
+==================================================
+        REPORTE DE VENTA - ESTADIO
+==================================================
+Fecha y hora    : 03/05/2026 20:02:05
+Categoría       : Vip
+Boletos vendidos: 6
+Total generado  : $6.00
+
+Detalle de asientos vendidos:
+  - ID: 38DF9DD0 | Asiento: F1-C9 | Precio: $1.00
+  - ID: 9EDBC912 | Asiento: F1-C8 | Precio: $1.00
+  - ID: 5195DB0D | Asiento: F1-C7 | Precio: $1.00
+  - ID: 90E561A2 | Asiento: F1-C6 | Precio: $1.00
+  - ID: C9F8313F | Asiento: F1-C5 | Precio: $1.00
+  - ID: 4374E564 | Asiento: F0-C5 | Precio: $1.00
+==================================================
+
+==================================================
+        REPORTE DE VENTA - ESTADIO
+==================================================
+Fecha y hora    : 03/05/2026 20:19:08
+Categoría       : Vip
+Boletos vendidos: 1
+Total generado  : $1.00
+
+Detalle de asientos vendidos:
+  - ID: 986D0C16 | Asiento: F0-C3 | Precio: $1.00
+==================================================
+
+==================================================
+        REPORTE DE VENTA - ESTADIO
+==================================================
+Fecha y hora    : 03/05/2026 20:19:08
+Categoría       : General
+Boletos vendidos: 1
+Total generado  : $400.00
+
+Detalle de asientos vendidos:
+  - ID: 7FD175A2 | Asiento: F5-C4 | Precio: $400.00
+==================================================
+
+==================================================
+        REPORTE DE VENTA - ESTADIO
+==================================================
+Fecha y hora    : 03/05/2026 20:19:58
+Categoría       : Preferencial
+Boletos vendidos: 2
+Total generado  : $1600.00
+
+Detalle de asientos vendidos:
+  - ID: D9EC71EB | Asiento: F2-C3 | Precio: $800.00
+  - ID: 49D2A12A | Asiento: F3-C4 | Precio: $800.00
+==================================================
+
+==================================================
+        REPORTE DE VENTA - ESTADIO
+==================================================
+Fecha y hora    : 03/05/2026 20:19:58
+Categoría       : Vip
+Boletos vendidos: 1
+Total generado  : $1.00
+
+Detalle de asientos vendidos:
+  - ID: 3232E0DE | Asiento: F0-C2 | Precio: $1.00
+==================================================
+
+==================================================
+        REPORTE DE VENTA - ESTADIO
+==================================================
+Fecha y hora    : 03/05/2026 20:20:50
+Categoría       : Preferencial
+Boletos vendidos: 2
+Total generado  : $1600.00
+
+Detalle de asientos vendidos:
+  - ID: EDEF6194 | Asiento: F3-C6 | Precio: $800.00
+  - ID: 35C5575A | Asiento: F3-C5 | Precio: $800.00
+==================================================
+
+==================================================
+        REPORTE DE VENTA - ESTADIO
+==================================================
+Fecha y hora    : 03/05/2026 20:20:50
+Categoría       : Vip
+Boletos vendidos: 1
+Total generado  : $1.00
+
+Detalle de asientos vendidos:
+  - ID: DE2F0A45 | Asiento: F0-C4 | Precio: $1.00
+==================================================
+
+==================================================
+        REPORTE DE VENTA - ESTADIO
+==================================================
+Fecha y hora    : 03/05/2026 20:20:50
+Categoría       : General
+Boletos vendidos: 3
+Total generado  : $1200.00
+
+Detalle de asientos vendidos:
+  - ID: 4C6E416D | Asiento: F7-C5 | Precio: $400.00
+  - ID: 26D0FB9B | Asiento: F7-C6 | Precio: $400.00
+  - ID: FF51EA15 | Asiento: F7-C7 | Precio: $400.00
+==================================================
+

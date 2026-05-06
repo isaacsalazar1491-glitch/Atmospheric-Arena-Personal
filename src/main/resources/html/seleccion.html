@@ -7,40 +7,90 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <script>
-  tailwind.config={darkMode:"class",theme:{extend:{
-    colors:{
+  tailwind.config={darkMode:"class",theme:{extend:
+  {
+    colors:
+    {
       "primary":"#005bbf","secondary":"#0061a4","secondary-container":"#33a0fd",
       "on-primary":"#ffffff","background":"#fbf9f9","surface":"#fbf9f9",
       "surface-container-lowest":"#ffffff","surface-container-low":"#f5f3f3",
       "surface-container":"#efeded","surface-container-high":"#e9e8e7",
     },
-    fontFamily:{"sans":["Inter","system-ui","sans-serif"]}
-  }}}
+    fontFamily:
+    {
+        "sans":["Inter","system-ui","sans-serif"]
+    }
+    }
+  }
+}
 </script>
 <style>
   *{font-family:'Inter',system-ui,sans-serif}
 
-  /* Colores de zona */
-  .zona-vip          { background:#7c3aed; color:#fff; }
-  .zona-vip:hover:not(:disabled)    { background:#6d28d9; }
-  .zona-preferencial { background:#2563eb; color:#fff; }
-  .zona-preferencial:hover:not(:disabled) { background:#1d4ed8; }
-  .zona-general      { background:#16a34a; color:#fff; }
-  .zona-general:hover:not(:disabled) { background:#15803d; }
-
-  /* Asientos */
-  .seat-ocupado { background:#fca5a5!important; color:#991b1b!important; opacity:0.5; cursor:not-allowed!important; }
-  .seat-sel-vip          { background:#4c1d95!important; outline:3px solid #c4b5fd; }
-  .seat-sel-preferencial { background:#1e3a8a!important; outline:3px solid #93c5fd; }
-  .seat-sel-general      { background:#14532d!important; outline:3px solid #86efac; }
-  .seat-btn { transition:transform .1s; border-radius:8px; }
-  .seat-btn:hover:not(:disabled) { transform:scale(1.2); }
-  .seat-btn:active:not(:disabled){ transform:scale(0.9); }
-
-  /* Efecto de mapa interactivo */
-  .map-zone { transition: all 0.2s ease; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; letter-spacing: 0.1em; }
-  .map-zone:hover { filter: brightness(1.1); transform: scale(1.02); z-index: 10; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3); }
-  .map-zone.active { filter: brightness(1.2); box-shadow: 0 0 0 4px white, 0 0 0 8px currentColor; z-index: 20; transform: scale(1.05); }
+  .zona-vip          
+  { 
+      background:#7c3aed; color:#fff; 
+  }
+  .zona-vip:hover:not(:disabled)   
+  { 
+      background:#6d28d9; 
+  }
+  .zona-preferencial 
+  { 
+      background:#2563eb; color:#fff; 
+  }
+  .zona-preferencial:hover:not(:disabled) 
+  {
+      background:#1d4ed8;
+  }
+  .zona-general     
+  { 
+      background:#16a34a; color:#fff; 
+  }
+  .zona-general:hover:not(:disabled) 
+  {
+      background:#15803d; 
+  }
+  .seat-ocupado 
+  { 
+      background:#fca5a5!important; color:#991b1b!important; opacity:0.5; cursor:not-allowed!important; 
+  }
+  .seat-sel-vip          
+  { 
+      background:#4c1d95!important; outline:3px solid #c4b5fd;
+  }
+  .seat-sel-preferencial 
+  { 
+      background:#1e3a8a!important; outline:3px solid #93c5fd;
+  }
+  .seat-sel-general     
+  { 
+      background:#14532d!important; outline:3px solid #86efac; 
+  }
+  .seat-btn 
+  { 
+      transition:transform .1s; border-radius:8px; 
+  }
+  .seat-btn:hover:not(:disabled) 
+  { 
+      transform:scale(1.2);
+  }
+  .seat-btn:active:not(:disabled)
+  { 
+      transform:scale(0.9); 
+  }
+  .map-zone 
+  { 
+      transition: all 0.2s ease; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; letter-spacing: 0.1em; 
+  }
+  .map-zone:hover 
+  {
+      filter: brightness(1.1); transform: scale(1.02); z-index: 10; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3); 
+  }
+  .map-zone.active
+  { 
+      filter: brightness(1.2); box-shadow: 0 0 0 4px white, 0 0 0 8px currentColor; z-index: 20; transform: scale(1.05); 
+  }
 </style>
 </head>
 <body class="bg-background text-on-background min-h-screen pb-32 md:pb-0 md:pt-20">
@@ -58,7 +108,7 @@
 
 <main class="max-w-screen-2xl mx-auto px-6 py-8 flex flex-col lg:flex-row gap-8">
 
-  <!-- COLUMNA IZQUIERDA: Contexto del Evento -->
+  <!-- EVENTO -->
   <div class="lg:w-1/4 space-y-6">
     <div class="bg-surface-container-lowest rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
       <div class="relative h-40 overflow-hidden">
@@ -68,68 +118,104 @@
             <p id="evento-fecha" class="text-slate-300 text-xs">—</p>
         </div>
       </div>
-    </div>
+    </div> 
+            <div class="bg-surface-container-lowest rounded-2xl p-6 border border-slate-200 flex flex-col">
+                <h3 class="text-sm font-black tracking-tight mb-4">Asientos Disponibles</h3>
+                
+                <div id="lista-disponibilidad" class="flex flex-col gap-2">
+                    <p class="text-xs text-slate-400 text-center py-2">Calculando disponibilidad...</p>
+                </div>
+            </div>
   </div>
 
-  <!-- COLUMNA CENTRAL: Mapa Interactivo y Cuadrícula dinámica -->
   <div class="flex-grow space-y-6">
     <div class="bg-surface-container-lowest rounded-[1.5rem] p-6 lg:p-10 shadow-sm border border-slate-200">
         
-        <h3 class="text-xl font-black text-center mb-2">Selecciona una Zona</h3>
-        <p class="text-xs text-center text-slate-500 mb-8">Haz clic en los bloques de color alrededor de la cancha</p>
-
-        <!-- MAPA DEL ESTADIO INTERACTIVO -->
-        <div class="relative w-full max-w-2xl mx-auto aspect-[4/3] bg-surface-container-low rounded-[2rem] p-4 border-2 border-slate-200 mb-10">
+        <h3 class="text-xl font-black text-center mb-2">Selecciona en el mapa</h3>
+        <p class="text-xs text-center text-slate-500 mb-8">Elige una sección para continuar</p>
+        
+        <div class="relative w-full max-w-2xl mx-auto h-[300px] lg:h-[360px] bg-surface-container-low rounded-[2rem] p-4 border-2 border-slate-200 mb-10">
             
-            <!-- Cancha Central (Decorativa) -->
+            <!-- CANCHA -->
             <div class="absolute inset-y-16 inset-x-20 bg-green-600 rounded-lg border-2 border-white/50 flex items-center justify-center pointer-events-none">
-                <div class="w-20 h-20 border-2 border-white/50 rounded-full"></div>
+                <div class="w-16 h-16 md:w-20 md:h-20 border-2 border-white/50 rounded-full"></div>
                 <div class="absolute w-full h-0 border-t-2 border-white/50"></div>
-                <div class="absolute left-0 inset-y-1/4 w-12 border-2 border-l-0 border-white/50"></div>
-                <div class="absolute right-0 inset-y-1/4 w-12 border-2 border-r-0 border-white/50"></div>
+                <div class="absolute left-0 inset-y-1/4 w-8 md:w-12 border-2 border-l-0 border-white/50"></div>
+                <div class="absolute right-0 inset-y-1/4 w-8 md:w-12 border-2 border-r-0 border-white/50"></div>
             </div>
-
-            <!-- BOTONES DE ZONAS (Rectángulos alrededor de la imagen) -->
-            <!-- VIP (Arriba) -->
-            <div id="btn-zona-VIP" onclick="seleccionarZona('VIP')" class="map-zone absolute top-2 inset-x-20 h-12 bg-purple-500 rounded-t-xl border-b-4 border-purple-700 text-purple-500">VIP (Norte)</div>
             
-            <!-- PREFERENCIAL (Abajo) -->
-            <div id="btn-zona-PREFERENCIAL" onclick="seleccionarZona('PREFERENCIAL')" class="map-zone absolute bottom-2 inset-x-20 h-12 bg-blue-500 rounded-b-xl border-t-4 border-blue-700 text-blue-500">PREFERENCIAL (Sur)</div>
+            <!-- VIP -->
+            <div id="btn-zona-VIP" class="absolute top-3 inset-x-20 h-12 flex gap-1 text-pink-500">
+                <div class="absolute -top-4 w-full flex justify-center z-10 pointer-events-none">
+                <span class="text-slate-500 text-[10px] font-bold tracking-widest uppercase">VIP (Norte)</span></div>
+                <div onclick="seleccionarZona('VIP', 1)" class="relative flex-1 h-full bg-yellow-500 rounded-tl-xl cursor-pointer hover:brightness-110 active:scale-95 transition-all"><span class="absolute top-1 left-1.5 text-[10px] text-white/70 font-black pointer-events-none">1</span></div>
+                <div onclick="seleccionarZona('VIP', 2)" class="relative flex-1 h-full bg-yellow-500 cursor-pointer hover:brightness-110 active:scale-95 transition-all"><span class="absolute top-1 left-1.5 text-[10px] text-white/70 font-black pointer-events-none">2</span></div>
+                <div onclick="seleccionarZona('VIP', 3)" class="relative flex-1 h-full bg-yellow-500 cursor-pointer hover:brightness-110 active:scale-95 transition-all"><span class="absolute top-1 left-1.5 text-[10px] text-white/70 font-black pointer-events-none">3</span></div>
+                <div onclick="seleccionarZona('VIP', 4)" class="relative flex-1 h-full bg-yellow-500 rounded-tr-xl cursor-pointer hover:brightness-110 active:scale-95 transition-all"><span class="absolute top-1 left-1.5 text-[10px] text-white/70 font-black pointer-events-none">4</span></div>
+            </div>
             
-            <!-- GENERAL OESTE (Izquierda) -->
-            <div id="btn-zona-GENERAL-OESTE" onclick="seleccionarZona('GENERAL')" class="map-zone absolute inset-y-16 left-2 w-16 bg-green-500 rounded-l-xl border-r-4 border-green-700 text-green-500" style="writing-mode: vertical-rl; transform: rotate(180deg);">GENERAL OESTE</div>
+            <!-- PREFERENCIAL -->
+            <div id="btn-zona-PREFERENCIAL" class="absolute bottom-3 inset-x-20 h-12 flex gap-1 text-blue-500">
+                <div class="absolute -bottom-4 w-full flex justify-center z-10 pointer-events-none">
+                <span class="text-slate-500 text-[10px] font-bold tracking-widest uppercase">Preferencial (Sur)</span></div>
+                <div onclick="seleccionarZona('PREFERENCIAL', 5)" class="relative flex-1 h-full bg-red-500 rounded-bl-xl cursor-pointer hover:brightness-110 active:scale-95 transition-all"><span class="absolute top-1 left-1.5 text-[10px] text-white/70 font-black pointer-events-none">5</span></div>
+                <div onclick="seleccionarZona('PREFERENCIAL', 6)" class="relative flex-1 h-full bg-red-500 cursor-pointer hover:brightness-110 active:scale-95 transition-all"><span class="absolute top-1 left-1.5 text-[10px] text-white/70 font-black pointer-events-none">6</span></div>
+                <div onclick="seleccionarZona('PREFERENCIAL', 7)" class="relative flex-1 h-full bg-red-500 cursor-pointer hover:brightness-110 active:scale-95 transition-all"><span class="absolute top-1 left-1.5 text-[10px] text-white/70 font-black pointer-events-none">7</span></div>
+                <div onclick="seleccionarZona('PREFERENCIAL', 8)" class="relative flex-1 h-full bg-red-500 rounded-br-xl cursor-pointer hover:brightness-110 active:scale-95 transition-all"><span class="absolute top-1 left-1.5 text-[10px] text-white/70 font-black pointer-events-none">8</span></div>
+            </div>
             
-            <!-- GENERAL ESTE (Derecha) -->
-            <div id="btn-zona-GENERAL-ESTE" onclick="seleccionarZona('GENERAL')" class="map-zone absolute inset-y-16 right-2 w-16 bg-green-500 rounded-r-xl border-l-4 border-green-700 text-green-500" style="writing-mode: vertical-rl;">GENERAL ESTE</div>
-
-        </div>
-
-        <!-- CONTENEDOR DE LA CUADRÍCULA DE ASIENTOS -->
+            <!-- GENERAL OESTE -->
+            <div id="btn-zona-GENERAL-OESTE" class="absolute inset-y-16 left-3 w-16 flex flex-col gap-1 text-green-500">
+                <div class="absolute -left-4 h-full flex items-center justify-center z-10 pointer-events-none">
+                <span class="text-slate-500 text-[10px] font-bold tracking-widest uppercase" style="writing-mode: vertical-rl; transform: rotate(180deg);">General Oeste</span></div>
+                <div onclick="seleccionarZona('GENERAL', 9)" class="relative flex-1 w-full bg-orange-500 rounded-tl-xl cursor-pointer hover:brightness-110 active:scale-95 transition-all"><span class="absolute top-1 left-1.5 text-[10px] text-white/70 font-black pointer-events-none">9</span></div>
+                <div onclick="seleccionarZona('GENERAL', 10)" class="relative flex-1 w-full bg-orange-500 cursor-pointer hover:brightness-110 active:scale-95 transition-all"><span class="absolute top-1 left-1.5 text-[10px] text-white/70 font-black pointer-events-none">10</span></div>
+                <div onclick="seleccionarZona('GENERAL', 11)" class="relative flex-1 w-full bg-orange-500 rounded-bl-xl cursor-pointer hover:brightness-110 active:scale-95 transition-all"><span class="absolute top-1 left-1.5 text-[10px] text-white/70 font-black pointer-events-none">11</span></div>
+            </div>
+            
+            <!-- GENERAL ESTE -->
+            <div id="btn-zona-GENERAL-ESTE" class="absolute inset-y-16 right-3 w-16 flex flex-col gap-1 text-green-500">
+                <div class="absolute -right-4 h-full flex items-center justify-center z-10 pointer-events-none">
+                <span class="text-slate-500 text-[10px] font-bold tracking-widest uppercase" style="writing-mode: vertical-rl;">General Este</span></div>
+                <div onclick="seleccionarZona('GENERAL', 12)" class="relative flex-1 w-full bg-orange-500 rounded-tr-xl cursor-pointer hover:brightness-110 active:scale-95 transition-all"><span class="absolute top-1 left-1.5 text-[10px] text-white/70 font-black pointer-events-none">12</span></div>
+                <div onclick="seleccionarZona('GENERAL', 13)" class="relative flex-1 w-full bg-orange-500 cursor-pointer hover:brightness-110 active:scale-95 transition-all"><span class="absolute top-1 left-1.5 text-[10px] text-white/70 font-black pointer-events-none">13</span></div>
+                <div onclick="seleccionarZona('GENERAL', 14)" class="relative flex-1 w-full bg-orange-500 rounded-br-xl cursor-pointer hover:brightness-110 active:scale-95 transition-all"><span class="absolute top-1 left-1.5 text-[10px] text-white/70 font-black pointer-events-none">14</span></div>
+            </div>
+         </div>
+    
         <div id="grid-container" class="transition-all duration-500 ease-in-out opacity-0 translate-y-4 hidden">
             <div class="border-t-2 border-dashed border-slate-200 pt-8">
-                <div class="flex justify-between items-end mb-6">
-                    <div>
-                        <h4 id="grid-title" class="text-lg font-black text-slate-800">Asientos Disponibles</h4>
-                        <p id="grid-subtitle" class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Selecciona tus butacas</p>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="flex items-center gap-1.5"><div class="w-4 h-4 rounded-md bg-slate-200"></div><span class="text-[10px] font-bold uppercase text-slate-500">Disponible</span></div>
-                        <div class="flex items-center gap-1.5"><div class="w-4 h-4 rounded-md bg-red-300"></div><span class="text-[10px] font-bold uppercase text-slate-500">Ocupado</span></div>
+          
+                <div class="mb-6">
+                    <div class="flex items-start gap-4">
+                        <button onclick="document.getElementById('grid-container').classList.add('hidden')" class="w-8 h-8 mt-1 flex items-center justify-center bg-slate-100 text-slate-600 hover:bg-slate-200 rounded-full transition-all shrink-0">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-0.5"><path d="M15 18l-6-6 6-6"/></svg>
+                        </button>
+                        
+                        <div class="flex flex-col">
+                            <h2 id="stadium-name" class="text-sm font-medium text-slate-900">Cargando...</h2>
+                            <h3 id="grid-title" class="text-xs font-normal text-slate-400 uppercase tracking-wide mt-1">SELECCIONA SECTOR</h3>
+                            <p id="grid-subtitle" class="text-xs font-normal text-slate-700 mt-0.5">Precio: $0.00</p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Aquí se dibujan solo los asientos de la zona seleccionada -->
-                <div id="seat-grid" class="max-w-2xl mx-auto space-y-2"></div>
+                <div class="flex justify-center gap-6 mb-8 border-b border-slate-100 pb-6">
+                    <div class="flex items-center gap-2"><div class="w-4 h-4 rounded-full bg-blue-600"></div><span class="text-[10px] font-bold text-slate-600 uppercase tracking-wider">Seleccionados</span></div>
+                    <div class="flex items-center gap-2"><div class="w-4 h-4 rounded-full bg-slate-500"></div><span class="text-[10px] font-bold text-slate-600 uppercase tracking-wider">Disponibles</span></div>
+                    <div class="flex items-center gap-2"><div class="w-4 h-4 rounded-full bg-slate-200"></div><span class="text-[10px] font-bold text-slate-600 uppercase tracking-wider">Ocupados</span></div>
+                </div>
+
+                <div id="seat-grid" class="max-w-2xl mx-auto space-y-3 overflow-x-auto pb-4"></div>
             </div>
         </div>
-
     </div>
   </div>
 
-  <!-- COLUMNA DERECHA: Resumen de Compra -->
+  <!-- COMPRA-->
   <aside class="w-full lg:w-80">
-    <div class="bg-surface-container-lowest rounded-[1.5rem] p-6 shadow-sm border border-slate-200 sticky top-28 flex flex-col">
-      <h3 class="text-xl font-black tracking-tight mb-1">Order Summary</h3>
+    <div class="bg-surface-container-lowest rounded-[1.5rem] p-6 border border-slate-200 sticky top-28 flex flex-col">
+      <h3 class="text-sm font-black tracking-tight mb-1">Resumen de la compra</h3>
       <p id="resumen-evento" class="text-xs text-slate-500 mb-4 truncate">—</p>
 
       <div id="ticket-list" class="space-y-2 mb-4 min-h-[80px] max-h-48 overflow-y-auto">
@@ -138,33 +224,59 @@
 
       <div class="border-t border-slate-200 pt-4 mb-6">
         <div class="flex justify-between items-center">
-          <p class="text-sm font-bold">Total</p>
-          <p id="total-price" class="text-2xl font-black text-primary">$0.00</p>
+          <p class="text-base font-bold">Total</p>
+          <p id="total-price" class="text-xl font-bold text-slate-800">$0.00</p>
         </div>
         <p id="selected-count" class="text-[10px] text-slate-500 mt-1 text-right">0 boletos</p>
       </div>
 
-      <button id="btn-comprar" onclick="confirmarCompra()"
-              class="w-full bg-gradient-to-r from-primary to-secondary-container text-white font-black py-3 rounded-full text-sm shadow-[0px_8px_24px_rgba(0,91,191,0.2)] hover:scale-[1.02] transition-transform active:scale-95 disabled:opacity-40 disabled:scale-100" disabled>
-        Confirmar Compra
+      <button id="btn-comprar" onclick="confirmarCompra()" class="w-full bg-blue-500  text-white font-black py-3 rounded-full text-sm disabled:opacity-40" disabled>
+        Confirmar compra
       </button>
     </div>
   </aside>
 </main>
+    
+<div id="modal-exito" class="hidden fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-sm overflow-y-auto pt-10 pb-10">
+  <div class="bg-surface-container-lowest rounded-[2rem] p-8 max-w-xl w-full mx-4 shadow-2xl border border-slate-200">
+    
+    <div class="flex items-center gap-4 mb-6">
+        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center shrink-0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#005bbf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div>
+            <h2 class="text-2xl font-black text-slate-900 tracking-tight">Ya tienes los boletos</h2>
+            <p class="text-xs text-slate-500 mt-0.5">Su compra <span id="orden-id" class="font-bold text-primary"></span> está confirmada.</p>
+        </div>
+    </div>
 
-<!-- Modal éxito (Intacto) -->
-<div id="modal-exito" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-  <div class="bg-surface-container-lowest rounded-[2rem] p-10 max-w-md w-full mx-6 shadow-2xl text-center">
-    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10"><polyline points="20 6 9 17 4 12"/></svg>
+    <div class="flex gap-4 items-center bg-surface-container-low rounded-2xl p-4 mb-8 border border-slate-100">
+        <img id="modal-img" src="" class="w-16 h-16 rounded-xl object-cover shadow-sm bg-slate-200 shrink-0" />
+        <div class="overflow-hidden">
+            <h4 id="modal-evento-nombre" class="font-bold text-sm text-slate-900 truncate">Cargando...</h4>
+            <p id="modal-evento-fecha" class="text-xs text-slate-500 mt-0.5">—</p>
+            <p id="modal-evento-lugar" class="text-[10px] text-slate-400 mt-0.5 uppercase tracking-wider truncate">—</p>
+        </div>
     </div>
-    <h2 class="text-3xl font-black mb-2">¡Compra exitosa!</h2>
-    <p class="text-slate-500 mb-6" id="modal-detalle"></p>
-    <div class="bg-surface-container-low rounded-xl p-4 mb-8">
-      <p class="text-xs uppercase tracking-widest text-slate-500 mb-1">Total pagado</p>
-      <p id="modal-total" class="text-4xl font-black text-primary">$0.00</p>
+
+    <div class="mb-8">
+        <h3 class="text-xs font-black uppercase tracking-widest text-slate-400 border-b border-dashed border-slate-200 pb-2 mb-4">Resumen de la compra</h3>
+        <div id="modal-lista-boletos" class="flex flex-col gap-3 mb-6"></div>
+
+        <div class="border-t border-dashed border-slate-200 pt-4 flex flex-col gap-1">
+            <div class="flex justify-between text-xs text-slate-500 font-medium">
+                <span>Total Parcial</span>
+                <span id="modal-subtotal">$0.00</span></div>
+            <div class="flex justify-between items-center mt-2">
+                <span class="text-sm font-bold text-slate-800">Total Pagado</span>
+                <span id="modal-total-pagado" class="text-2xl font-black text-blue-600">$0.00</span></div>
+        </div>
     </div>
-    <button onclick="cerrarModal()" class="w-full py-3 border-2 border-primary text-primary font-bold rounded-full hover:bg-primary hover:text-white transition-all cursor-pointer">Cerrar</button>
+
+    <button onclick="cerrarModal()" class="w-full py-3.5 bg-blue-500 text-white font-black rounded-full text-sm hover:bg-blue-600 transition-colors">
+        Aceptar y Cerrar
+    </button>
+
   </div>
 </div>
 
@@ -172,20 +284,25 @@
   const LETRAS = ['A','B','C','D','E','F','G','H','I','J'];
   const ZONA_FILA = ['VIP','VIP','PREFERENCIAL','PREFERENCIAL','PREFERENCIAL',
                      'GENERAL','GENERAL','GENERAL','GENERAL','GENERAL'];
-  const ZONA_CFG = {
-    'VIP':          { cls:'zona-vip',          selCls:'seat-sel-vip',          label:'VIP',          color:'#7c3aed' },
-    'PREFERENCIAL': { cls:'zona-preferencial', selCls:'seat-sel-preferencial', label:'Preferencial', color:'#2563eb' },
-    'GENERAL':      { cls:'zona-general',      selCls:'seat-sel-general',      label:'General',      color:'#16a34a' },
+  const ZONA_CFG = 
+  {
+    'VIP':          { cls:'zona-vip',          selCls:'seat-sel-vip',          label:'VIP',          color:'#eab308' },
+    'PREFERENCIAL': { cls:'zona-preferencial', selCls:'seat-sel-preferencial', label:'Preferencial', color:'#f97316' },
+    'GENERAL':      { cls:'zona-general',      selCls:'seat-sel-general',      label:'General',      color:'#ef4444' },
   };
 
   let matrices = {}; let seleccionados = []; let precios = {}; let infoEvento = {};
   
-  // NUEVA VARIABLE DE ESTADO
   let zonaActiva = null;
 
-  function inicializar() {
-    if (!window.javaApp) { setTimeout(inicializar, 150); return; }
-    try {
+  function inicializar() 
+  {
+    if (!window.javaApp) 
+    {
+     setTimeout(inicializar, 150); return; 
+    }
+    try
+    {
         infoEvento = JSON.parse(window.javaApp.getInfoEvento());
         matrices   = JSON.parse(window.javaApp.getAsientosEvento());
         const cats = JSON.parse(window.javaApp.getInfoCategorias());
@@ -195,149 +312,362 @@
         document.getElementById('evento-fecha').textContent  = infoEvento.fecha;
         document.getElementById('resumen-evento').textContent = infoEvento.nombre;
 
-        cats.forEach(cat => { precios[cat.id] = cat.precio; });
-
-        // Ya no dibujamos la matriz de inmediato, esperamos a que seleccione una zona.
-        actualizarResumen();
-    } catch(e) { console.error("Error init:", e); }
-  }
-
-  // NUEVA FUNCIÓN: Filtra qué zona se dibuja
-  function seleccionarZona(zona) {
-    zonaActiva = zona;
-    
-    // Quitar clase 'active' de todos los botones del mapa
-    document.querySelectorAll('.map-zone').forEach(btn => btn.classList.remove('active'));
-    
-    // Agregar clase 'active' al botón o botones de la zona seleccionada
-    if(zona === 'GENERAL') {
-        document.getElementById('btn-zona-GENERAL-OESTE').classList.add('active');
-        document.getElementById('btn-zona-GENERAL-ESTE').classList.add('active');
-    } else {
-        document.getElementById('btn-zona-' + zona).classList.add('active');
-    }
-
-    // Mostrar el contenedor de la cuadrícula con animación
-    const gridContainer = document.getElementById('grid-container');
-    gridContainer.classList.remove('hidden', 'opacity-0', 'translate-y-4');
-    gridContainer.classList.add('opacity-100', 'translate-y-0');
-
-    // Actualizar títulos
-    document.getElementById('grid-title').textContent = ZONA_CFG[zona].label;
-    document.getElementById('grid-title').style.color = ZONA_CFG[zona].color;
-    document.getElementById('grid-subtitle').textContent = `$${precios[zona].toFixed(2)} por asiento`;
-
-    renderGrid();
-  }
-
-  function renderGrid() {
-    const container = document.getElementById('seat-grid');
-    container.innerHTML = '';
-
-    // EL SECRETO ESTÁ AQUÍ: Solo iteramos si la fila pertenece a la zona activa
-    for (let f = 0; f < 10; f++) {
-      const zona = ZONA_FILA[f];
-      
-      // Si la fila no es de la zona que el usuario clickeó, la saltamos.
-      // Así mantenemos el ID de fila global intacto para Java.
-      if (zona !== zonaActiva) continue; 
-
-      const cfg = ZONA_CFG[zona];
-      const fila = document.createElement('div');
-      fila.className = 'grid items-center gap-1.5 md:gap-2 mb-2';
-      fila.style.gridTemplateColumns = '20px repeat(10, 1fr) 20px';
-
-      const lL = document.createElement('div');
-      lL.className = 'text-center text-[10px] font-black text-slate-400';
-      lL.textContent = LETRAS[f];
-      fila.appendChild(lL);
-
-      for (let c = 0; c < 10; c++) {
-        const ocupado = matrices[zona] && matrices[zona][f][c];
-        const sel     = seleccionados.some(s => s.fila === f && s.col === c);
-        const btn     = document.createElement('button');
-        
-        // Estilo neutral si no está seleccionado ni ocupado
-        btn.className = 'seat-btn aspect-square flex items-center justify-center text-[10px] font-bold bg-slate-100 text-slate-400 hover:bg-slate-200';
-        btn.textContent = c + 1;
-
-        if (ocupado) {
-          btn.classList.add('seat-ocupado');
-          btn.disabled = true;
-        } else if (sel) {
-          btn.className = `seat-btn aspect-square flex items-center justify-center text-[10px] font-bold ${cfg.selCls} text-white`;
-        } else {
-          // Al hacer hover, toma el color de la zona
-          btn.onmouseenter = () => { btn.style.backgroundColor = cfg.color; btn.style.color = 'white'; };
-          btn.onmouseleave = () => { btn.style.backgroundColor = ''; btn.style.color = ''; };
-          btn.onclick = () => toggleAsiento(f, c, zona);
+        cats.forEach(cat => 
+        { 
+            precios[cat.id] = cat.precio;
         }
-        
-        if (sel) btn.onclick = () => toggleAsiento(f, c, zona); // Permitir deseleccionar
+      );
 
-        fila.appendChild(btn);
-      }
-
-      const lR = document.createElement('div');
-      lR.className = 'text-center text-[10px] font-black text-slate-400';
-      lR.textContent = LETRAS[f];
-      fila.appendChild(lR);
-
-      container.appendChild(fila);
+        actualizarResumen();
+        actualizarDisponibilidad();
+    } catch(e)
+    {
+     console.error("Error init:", e); 
     }
   }
 
-  function toggleAsiento(f, c, zona) {
+  let bloqueActivo = null;
+
+  function getBloque(f, c) 
+  {
+      if (f <= 1) 
+      {
+        if (c <= 1) return 1;
+        if (c <= 4) return 2;
+        if (c <= 7) return 3;
+         return 4;
+      } else if (f <= 4) 
+      { 
+        if (c <= 1) return 5;
+        if (c <= 4) return 6;
+        if (c <= 7) return 7;
+         return 8;
+      } else 
+      { 
+        if (c <= 4) 
+        { 
+          if (f <= 6) return 9;
+          if (f === 7) return 10;
+           return 11;
+        } else 
+          { 
+            if (f <= 6) return 12;
+            if (f === 7) return 13;
+             return 14;
+          }
+      }
+  }
+
+  function seleccionarZona(zona, bloque) 
+  {
+      zonaActiva = zona;
+      bloqueActivo = bloque;
+
+      const gridContainer = document.getElementById('grid-container');
+      gridContainer.classList.remove('hidden', 'opacity-0', 'translate-y-4');
+      gridContainer.classList.add('opacity-100', 'translate-y-0');
+      
+      document.getElementById('stadium-name').textContent = infoEvento.lugar || 'Atmospheric Arena';
+      
+      let zonaSub = zona === 'VIP' ? '(NORTE)' : zona === 'PREFERENCIAL' ? '(SUR)' : '';
+      document.getElementById('grid-title').textContent = `${zona} ${zonaSub} - SECTOR ${bloque}`;
+      document.getElementById('grid-subtitle').textContent = `Precio: $${(precios[zona] || 0).toFixed(2)}`;
+      gridContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      renderGrid();
+  }
+
+  function renderGrid() 
+  {
+      const container = document.getElementById('seat-grid');
+      container.innerHTML = '';
+      const cfg = ZONA_CFG[zonaActiva];
+
+      for (let f = 0; f < 10; f++) 
+      {
+          if (ZONA_FILA[f] !== zonaActiva) continue;
+          
+          let colsBloque = [];
+          for (let c = 0; c < 10; c++) 
+          {
+            if (getBloque(f, c) === bloqueActivo) colsBloque.push(c);
+          }
+
+          if (colsBloque.length === 0) continue;
+
+          const fila = document.createElement('div');
+          fila.className = 'flex justify-center items-center gap-2 md:gap-3 mb-3 w-max mx-auto';
+
+          const lL = document.createElement('div');
+          lL.className = 'w-6 text-right text-[10px] font-black text-slate-400 mr-2';
+          lL.textContent = LETRAS[f];
+          fila.appendChild(lL);
+          colsBloque.forEach(c => 
+          {
+              const ocupado = matrices[zonaActiva] && matrices[zonaActiva][f] && matrices[zonaActiva][f][c];
+              const sel = seleccionados.some(s => s.fila === f && s.col === c);
+              const btn = document.createElement('button');
+              
+              btn.className = 'w-8 h-8 flex items-center justify-center text-[10px] font-bold rounded-full transition-all';
+              btn.textContent = (c + 1); 
+
+              if (ocupado) 
+              {
+                btn.classList.add('bg-slate-200', 'text-slate-400', 'cursor-not-allowed', 'opacity-60');
+                btn.disabled = true;
+              } else if (sel) 
+              {
+                btn.classList.add('bg-blue-600', 'text-white', 'scale-110');
+              } else 
+              {
+                btn.classList.add('bg-slate-500', 'text-white', 'hover:bg-slate-700', 'cursor-pointer');
+                btn.onclick = () => toggleAsiento(f, c, zonaActiva);
+              }
+
+              if (sel) btn.onclick = () => toggleAsiento(f, c, zonaActiva); 
+              fila.appendChild(btn);
+          });
+          const lR = document.createElement('div');
+          lR.className = 'w-6 text-left text-[10px] font-black text-slate-400 ml-2';
+          lR.textContent = LETRAS[f];
+          fila.appendChild(lR);
+
+          container.appendChild(fila);
+      }
+  }
+
+  function toggleAsiento(f, c, zona) 
+  {
     const idx = seleccionados.findIndex(s => s.fila === f && s.col === c);
     if (idx >= 0) seleccionados.splice(idx, 1);
     else seleccionados.push({ fila: f, col: c, zona: zona, precio: precios[zona] || 0 });
-    renderGrid(); actualizarResumen();
+    renderGrid();
+    actualizarResumen();
+    actualizarDisponibilidad();
   }
 
-  function actualizarResumen() {
+  function actualizarResumen()
+  {
+    const contenedorBoletos = document.getElementById('ticket-list'); 
+    
+    let total = 0;
+    let html = '';
+
+    seleccionados.forEach(s => 
+    {
+        const precio = s.precio || (precios[s.zona] || 0);
+        total += precio;
+        
+        html += `
+        <div class="flex justify-between items-center py-1.5 border-b border-slate-100 last:border-0 group">
+            <div class="flex items-center gap-2">
+                <button onclick="toggleAsiento(${s.fila}, ${s.col}, '${s.zona}')" class="text-slate-300 hover:text-red-500 hover:bg-red-50 p-1 rounded-full transition-all cursor-pointer" title="Quitar asiento">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                
+                <span class="font-bold text-slate-800 text-xs">${LETRAS[s.fila]}-${s.col + 1}</span>
+                <span class="text-[10px] font-bold ml-1" style="color:${ZONA_CFG[s.zona].color}">${ZONA_CFG[s.zona].label}</span></div>
+            <p class="font-semibold text-slate-500 text-xs">$${precio.toFixed(0)}</p>
+        </div>
+        `;
+    });
+
     const count = seleccionados.length;
-    const total = seleccionados.reduce((s, x) => s + x.precio, 0);
-
-    document.getElementById('total-price').textContent    = '$' + total.toFixed(2);
-    document.getElementById('selected-count').textContent = count + ' boleto(s)';
-    document.getElementById('btn-comprar').disabled       = count === 0;
-
-    const lista = document.getElementById('ticket-list');
-    if (!count) {
-      lista.innerHTML = '<p class="text-slate-400 text-xs text-center py-2">Aún no hay boletos seleccionados</p>';
-      return;
+    
+    if (count === 0) 
+    {
+        html = '<p class="text-slate-400 text-xs text-center py-2">Aún no hay boletos seleccionados</p>';
     }
 
-    lista.innerHTML = seleccionados.map(({fila, col, zona, precio}) => `
-      <div class="flex justify-between items-center py-1.5 border-b border-slate-100 last:border-0">
-        <div class="text-xs">
-            <span class="font-bold text-slate-800">${LETRAS[fila]}-${col+1}</span>
-            <span class="text-[10px] font-bold ml-1" style="color:${ZONA_CFG[zona].color}">${ZONA_CFG[zona].label}</span>
-        </div>
-        <p class="font-black text-slate-800 text-sm">$${precio.toFixed(0)}</p>
-      </div>`).join('');
-  }
+    if (contenedorBoletos)
+    {
+        contenedorBoletos.innerHTML = html;
+    }
 
-  function confirmarCompra() {
+    document.getElementById('total-price').textContent = '$' + total.toFixed(2);
+    document.getElementById('selected-count').textContent = count + ' boleto(s)';
+    document.getElementById('btn-comprar').disabled = count === 0;
+}
+
+
+let zonasExpandidas = {};
+
+function toggleExpandirZona(zona)
+{
+    zonasExpandidas[zona] = !zonasExpandidas[zona];
+    actualizarDisponibilidad();
+}
+
+function clickAsientoDisponible(f, c, zona) 
+{
+    const bloque = getBloque(f, c);
+    seleccionarZona(zona, bloque);
+    
+    const estaSeleccionado = seleccionados.some(s => s.fila === f && s.col === c);
+    if (!estaSeleccionado)
+    {
+        toggleAsiento(f, c, zona);
+    }
+}
+
+function actualizarDisponibilidad() 
+{
+    const contenedor = document.getElementById('lista-disponibilidad');
+    if (!contenedor || typeof matrices === 'undefined' || !matrices) return; 
+
+    let html = '';
+
+    for (const zona in ZONA_CFG) 
+    {
+        const config = ZONA_CFG[zona];
+        
+        let asientosPorBloque = {}; 
+        let libresReales = 0;
+
+        for (let f = 0; f < 10; f++)
+        {
+            if (ZONA_FILA[f] === zona) 
+            {
+                for (let c = 0; c < 10; c++)
+                {
+                    const ocupado = matrices[zona] && matrices[zona][f] && matrices[zona][f][c];
+                    const enCarrito = typeof seleccionados !== 'undefined' && seleccionados.some(s => s.fila === f && s.col === c);
+                    
+                    if (!ocupado && !enCarrito) 
+                    {
+                        libresReales++;
+                        const bloque = getBloque(f, c); 
+                        
+                        if (!asientosPorBloque[bloque]) 
+                        {
+                            asientosPorBloque[bloque] = [];
+                        }
+                        
+                        asientosPorBloque[bloque].push({ fila: f, col: c });
+                    }
+                }
+            }
+        }
+        const estaExpandida = zonasExpandidas[zona] || false;
+
+        html += `
+        <div class="border-b border-slate-100 last:border-0 rounded-lg -mx-2 px-2 overflow-hidden">
+            <div class="flex justify-between items-center py-2 hover:bg-slate-50 transition-colors cursor-pointer" onclick="toggleExpandirZona('${zona}')">
+                <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full shadow-sm" style="background-color: ${config.color}"></span>
+                    <span class="text-xs font-bold text-slate-700">${config.label}</span></div>
+                <div class="flex items-center gap-2">
+                    <p class="font-bold text-slate-500 text-xs">${libresReales} <span class="font-normal text-[10px] text-slate-500 ml-0.5">disp.</span></p>
+                    <svg class="w-4 h-4 text-slate-400 transition-transform ${estaExpandida ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+            </div>
+        `;
+        
+        if (estaExpandida) 
+        {
+            html += `<div class="pb-2">`;
+            
+            if (libresReales === 0) 
+            {
+                html += `<p class="text-[10px] text-slate-400 text-center py-1">Agotado</p>`;
+            } else
+            {
+                const bloquesOrdenados = Object.keys(asientosPorBloque).sort((a, b) => a - b);
+                
+                bloquesOrdenados.forEach(bloqueStr => 
+                {
+                    const asientos = asientosPorBloque[bloqueStr];
+                    
+                    html += `
+                    <div class="mt-3 first:mt-1">
+                        <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400 mb-1 ml-1">Sector ${bloqueStr}</p>
+                        <div class="grid grid-cols-5 gap-1.5">
+                    `;
+                    
+                    asientos.forEach(asiento =>
+                    {
+                        const nombreAsiento = LETRAS[asiento.fila] + '-' + (asiento.col + 1);
+                        html += `
+                        <button onclick="clickAsientoDisponible(${asiento.fila}, ${asiento.col}, '${zona}')" 
+                                class="text-[10px] font-bold py-1.5 rounded bg-slate-100 text-slate-600 hover:bg-blue-600 hover:text-white transition-colors border border-slate-200">
+                            ${nombreAsiento}
+                        </button>
+                        `;
+                    });
+                    
+                    html += `
+                        </div>
+                    </div>
+                    `;
+                });
+            }
+            html += `</div>`;
+        }
+
+        html += `</div>`;
+    }
+
+    contenedor.innerHTML = html;
+}
+  function confirmarCompra() 
+  {
     if (!seleccionados.length || !window.javaApp) return;
     const str = seleccionados.map(s => `${s.fila},${s.col},${s.zona}`).join(';');
     window.javaApp.confirmarCompraMixta(str);
   }
 
-  function mostrarExito(cantidad, total) {
-    document.getElementById('modal-detalle').textContent = cantidad + ' boletos procesados correctamente.';
-    document.getElementById('modal-total').textContent   = '$' + total.toFixed(2);
+  function mostrarExito(cantidad, total) 
+{
+    const numOrden = Math.floor(10000 + Math.random() * 90000) + '/MXC';
+    document.getElementById('orden-id').textContent = '#' + numOrden;
+
+    document.getElementById('modal-img').src = infoEvento.imagenUrl || '';
+    document.getElementById('modal-evento-nombre').textContent = infoEvento.nombre;
+    document.getElementById('modal-evento-fecha').textContent = infoEvento.fecha;
+    document.getElementById('modal-evento-lugar').textContent = infoEvento.lugar || 'Atmospheric Arena';
+
+    let htmlBoletos = '';
+    seleccionados.forEach(s =>
+    {
+        const precio = s.precio || (precios[s.zona] || 0);
+        const bloque = getBloque(s.fila, s.col); 
+        
+        htmlBoletos += `
+        <div class="flex justify-between items-center py-1">
+            <div>
+                <p class="font-bold text-slate-800 text-xs">Boleto ${ZONA_CFG[s.zona].label}</p>
+                <p class="text-[10px] text-slate-500 mt-0.5">Sector ${bloque} • Fila ${LETRAS[s.fila]} • Asiento ${s.col + 1}</p>
+            </div>
+            <p class="font-semibold text-slate-600 text-xs">$${precio.toFixed(2)}</p>
+        </div>
+        `;
+    });
+
+    document.getElementById('modal-lista-boletos').innerHTML = htmlBoletos;
+    
+    document.getElementById('modal-subtotal').textContent = '$' + total.toFixed(2);
+    document.getElementById('modal-total-pagado').textContent = '$' + total.toFixed(2);
+
     document.getElementById('modal-exito').classList.remove('hidden');
+
     seleccionados = [];
     zonaActiva = null;
     document.getElementById('grid-container').classList.add('hidden');
     document.querySelectorAll('.map-zone').forEach(btn => btn.classList.remove('active'));
     inicializar(); 
-  }
+}
 
-  function mostrarError(msg) { alert('Error: ' + msg); }
-  function cerrarModal() { document.getElementById('modal-exito').classList.add('hidden'); }
-  function irAHome() { if (window.javaApp) window.javaApp.navegarAHome(); }
+  function mostrarError(msg) 
+  {  
+    alert('Error: ' + msg); 
+  }
+  function cerrarModal() 
+  { 
+    document.getElementById('modal-exito').classList.add('hidden'); 
+  }
+  function irAHome() 
+  { 
+    if (window.javaApp) window.javaApp.navegarAHome();
+  }
 </script>
 </body>
 </html>

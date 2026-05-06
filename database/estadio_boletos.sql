@@ -1522,8 +1522,8 @@ CREATE TABLE `Eventos` (
 --
 
 INSERT INTO `Eventos` (`id_evento`, `nombre`, `fecha`) VALUES
-('EVT-001', 'London Lions vs. Manchester Titans', '2026-10-24 15:00:00'),
-('EVT-002', 'Midnight Echo Live', '2026-10-25 20:00:00'),
+('EVT-001', 'Nemesio Diez Toluca vs Chivas', '2026-05-27 19:00:00'),
+('EVT-002', 'BTS Arirang Tour', '2026-05-07 20:00:00'),
 ('EVT-003', 'Global E-Sports Finals', '2026-10-30 18:30:00'),
 ('EVT-004', 'Autumn Symphony Gala', '2026-10-28 19:00:00'),
 ('EVT-005', 'Taylor Swift: The Eras Tour', '2026-11-02 21:00:00'),
