@@ -7,7 +7,6 @@ package com.estadio.datastructures;
 import java.util.HashMap;
 
 /**
- * Envoltorio para gestionar el catálogo de precios con validaciones extra.
  * @author isaacgalvez
  */
 public class MapaPrecios 

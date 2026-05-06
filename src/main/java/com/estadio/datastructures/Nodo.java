@@ -5,8 +5,8 @@
 package com.estadio.datastructures;
 
 /**
- * Clase que representa un vagón (Nodo) de tu lista enlazada doble.
- * Usamos <T> para que sea genérico, aunque en tu caso T será un Boleto.
+ * 
+ * 
  */
 public class Nodo<T> 
 {

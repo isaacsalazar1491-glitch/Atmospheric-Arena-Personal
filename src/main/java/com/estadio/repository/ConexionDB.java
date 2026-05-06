@@ -14,7 +14,8 @@ import java.util.HashMap;
  * Motor de conexión único para todo el sistema.
  * @author isaacgalvez
  */
-public class ConexionDB {
+public class ConexionDB 
+{
     
     private static final String URL = "jdbc:mysql://localhost:3306/estadio_boletos";
     private static final String USER = "root";
@@ -23,34 +24,41 @@ public class ConexionDB {
     /**
      * Método central de conexión (usado por ReporteRepository)
      */
-    public static Connection conectar() {
-        try {
+    public static Connection conectar() 
+    {
+        try 
+        {
             // Asegúrate de tener el driver de MySQL en tus librerías
             return DriverManager.getConnection(URL, USER, PASS);
-        } catch (Exception e) {
+        } catch (Exception e) 
+        {
             System.out.println("Error Crítico de Conexión: " + e.getMessage());
             return null;
         }
     }
 
     /**
-     * Carga el catálogo de precios desde SQL (usado por GestorBoletos)
+     * Carga el catálogo de precios desde SQL 
      */
-    public static HashMap<String, Double> cargarPrecios() {
+    public static HashMap<String, Double> cargarPrecios() 
+    {
         HashMap<String, Double> mapa = new HashMap<>();
         String sql = "SELECT nombre, precio FROM Categorias";
         
         try (Connection conn = conectar(); 
              Statement stmt = conn.createStatement(); 
-             ResultSet rs = stmt.executeQuery(sql)) {
+             ResultSet rs = stmt.executeQuery(sql)) 
+        {
             
-            if (conn != null) {
-                while (rs.next()) {
-                    // Guardamos en mayúsculas para que coincida con Categoria.name()
+            if (conn != null) 
+            {
+                while (rs.next()) 
+                {
                     mapa.put(rs.getString("nombre").toUpperCase(), rs.getDouble("precio"));
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception e) 
+        {
             System.out.println("Error al recuperar precios de BD: " + e.getMessage());
         }
         return mapa;

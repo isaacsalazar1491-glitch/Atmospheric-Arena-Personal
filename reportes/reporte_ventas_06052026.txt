@@ -47,3 +47,15 @@ Detalle de asientos vendidos:
   - ID: 4615215D | Asiento: F0-C6 | Precio: $1.00
 ==================================================
 
+==================================================
+        REPORTE DE VENTA - ESTADIO
+==================================================
+Fecha y hora    : 06/05/2026 08:39:10
+Categoría       : Preferencial
+Boletos vendidos: 1
+Total generado  : $800.00
+
+Detalle de asientos vendidos:
+  - ID: 808FD749 | Asiento: F2-C1 | Precio: $800.00
+==================================================
+
